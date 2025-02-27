@@ -7,17 +7,23 @@ name_condidat = "Hamza_Fatnaoui"
 # extract_text_from_pdf_and_create_file(pdf_path,text_dir,name_condidat)
 
 # I worked with Gemma "google/gemma-2-2b-it"
-cache_dir = "./gemma_2_2b"
+cache_dir = "./models/gemma_2_2b"
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 quantization_config = BitsAndBytesConfig(load_in_8bit=True)
 
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
+# tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
+# model = AutoModelForCausalLM.from_pretrained(
+#     "google/gemma-2-2b-it",
+#     quantization_config=quantization_config,
+#     cache_dir = "./gemma_2_2b"
+# )
+
+tokenizer = AutoTokenizer.from_pretrained(cache_dir)
 model = AutoModelForCausalLM.from_pretrained(
-    "google/gemma-2-2b-it",
+    cache_dir,
     quantization_config=quantization_config,
-    cache_dir = "./gemma_2_2b"
 )
 
 # input_text = "Write me a poem about Machine Learning."
