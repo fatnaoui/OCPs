@@ -1,6 +1,5 @@
 .env
-./data/* # for the input documents
-./converted_text/* # for the converted text from the input documents
+# we have created data and converted_text
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
