@@ -23,8 +23,6 @@ tokenizer = AutoTokenizer.from_pretrained("./models")
 model = AutoModelForCausalLM.from_pretrained(
     "./models",
     device_map="cpu"
-    "./models",
-    device_map="cpu"
 )
 
 input_text = "Write me a poem about Machine Learning."
