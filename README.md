@@ -5,3 +5,9 @@ sentencepeiece issue: sudo apt update
 
 Create a token from hugging face if it is your first time dealing with models from it, and try to log in using huggingface-cli login
 
+"I encountered a similar error but was able to resolve it by referring to the Hugging Face documentation.
+
+Initially, access the Hugging Face hub via the notebook by executing the following commands:
+!pip install huggingface_hub
+
+huggingface-cli download --local-dir ./models/ google/gemma-2-2b-it
