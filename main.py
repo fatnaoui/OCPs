@@ -9,25 +9,22 @@ name_condidat = "Hamza_Fatnaoui"
 # I worked with Gemma "google/gemma-2-2b-it"
 cache_dir = "./models/gemma_2_2b"
 
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-
-quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
 # model = AutoModelForCausalLM.from_pretrained(
 #     "google/gemma-2-2b-it",
-#     quantization_config=quantization_config,
-#     cache_dir = "./gemma_2_2b"
+#     device_map="cpu"
 # )
 
-tokenizer = AutoTokenizer.from_pretrained(cache_dir)
+tokenizer = AutoTokenizer.from_pretrained("./models")
 model = AutoModelForCausalLM.from_pretrained(
-    cache_dir,
-    quantization_config=quantization_config,
+    "./models",
+    device_map="cpu"
 )
 
-# input_text = "Write me a poem about Machine Learning."
-# input_ids = tokenizer(input_text, return_tensors="pt").to("cuda")
+input_text = "Write me a poem about Machine Learning."
+input_ids = tokenizer(input_text, return_tensors="pt").to("cuda")
 
-# outputs = model.generate(**input_ids, max_new_tokens=32)
-# print(tokenizer.decode(outputs[0]))
+outputs = model.generate(**input_ids, max_new_tokens=32)
+print(tokenizer.decode(outputs[0]))
