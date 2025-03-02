@@ -1,34 +1,32 @@
-from tools import extract_text_from_pdf, extract_text_from_pdf_and_create_file
+from tools import (extract_text_from_pdf, 
+                    extract_text_from_pdf_and_create_file,
+                    )
+
+import torch
+from PIL import Image
+from transformers import AutoModel, AutoTokenizer
+
 
 pdf_path = "Hamza_Fatnaoui_CV.pdf"
 text_dir = "converted_text"
 name_condidat = "Hamza_Fatnaoui"
 
-# extract_text_from_pdf_and_create_file(pdf_path,text_dir,name_condidat)
-
 # I worked with Gemma "google/gemma-2-2b-it"
-cache_dir = "./gemma_2_2b"
+cache_dir = "models/MiniCPM_o_2_6"
 
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-
-# tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
-# model = AutoModelForCausalLM.from_pretrained(
-#     "google/gemma-2-2b-it",
-#     device_map="cpu",
-#     cache_dir=cache_dir
-# )
-
-tokenizer = AutoTokenizer.from_pretrained("./models")
-tokenizer = AutoTokenizer.from_pretrained("./models")
-model = AutoModelForCausalLM.from_pretrained(
-    "./models",
-    device_map="cpu"
+model = AutoModel.from_pretrained(
+    'openbmb/MiniCPM-o-2_6',
+    trust_remote_code=True,
+    attn_implementation='sdpa', # sdpa or flash_attention_2
+    torch_dtype=torch.bfloat16,
+    init_vision=True,
+    init_audio=False,
+    init_tts=False,
+    cache_dir=cache_dir
 )
 
-input_text = "Write me a poem about Machine Learning."
-input_ids = tokenizer(input_text, return_tensors="pt")
+model = model.eval().cuda()
+tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6', trust_remote_code=True)
 
-outputs = model.generate(**input_ids, max_new_tokens=32)
-print(tokenizer.decode(outputs[0]))
-outputs = model.generate(**input_ids, max_new_tokens=32)
-print(tokenizer.decode(outputs[0]))
+
+
