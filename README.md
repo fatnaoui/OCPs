@@ -15,3 +15,6 @@ huggingface-cli download --local-dir ./models/ google/gemma-2-2b-it
 Pdf2image it won't work without excuting this command
 sudo apt update
 sudo apt install poppler-utils
+
+To use subprocess (which convert a docx to pdf): sudo apt install libreoffice
+
