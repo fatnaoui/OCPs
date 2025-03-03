@@ -1,4 +1,6 @@
 .env
+data/*
+converted_data/*
 # we have created data and converted_text
 # Byte-compiled / optimized / DLL files
 __pycache__/
