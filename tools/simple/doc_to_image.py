@@ -5,20 +5,16 @@ import tempfile; import subprocess; import glob
 
 # pdf to image
 def pdf_to_image(file_input_path,output_path,condidatname,filename):
-    print("from pdf")
-
     try:
         images = convert_from_path(file_input_path)
         for i, img in enumerate(images):
             img_path = os.path.join(output_path,f"{condidatname}_{i}.jpg")
             img.save(img_path, 'JPEG')
-        print(f"Converted {filename} to images successfully!")
     except Exception as e:
         print(f"Error converting {filename} to images: {e}")
 
 # docs to image
 def docx_to_image(file_input_path,output_path,condidatname,filename):
-    print("from docx")
     with tempfile.TemporaryDirectory() as temp_dir:
         try:
             subprocess.run(["libreoffice", "--headless", "--convert-to", "pdf", file_input_path, "--outdir", temp_dir], check=True)  
@@ -50,7 +46,6 @@ def doc_to_image(input_dir,output_dir):
             file_input_path = os.path.join(input_dir,filename)
             output_path = os.path.join(output_dir,condidatname)
             if os.path.exists(output_path):
-                print(f"Skipping {filename}: Already processed.")
                 continue
             os.makedirs(output_path,exist_ok=True)
         else:
