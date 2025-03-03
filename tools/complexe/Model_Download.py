@@ -16,17 +16,24 @@ def download_omni(exist=True):
             init_tts=False,
             )
         tokenizer = AutoTokenizer.from_pretrained(cache_dir, trust_remote_code=True)
-        return model, tokenizer
 
-    model = AutoModel.from_pretrained(
-        'openbmb/MiniCPM-o-2_6',
-        trust_remote_code=True,
-        attn_implementation='sdpa', # sdpa or flash_attention_2
-        torch_dtype=torch.bfloat16,
-        init_vision=True,
-        init_audio=False,
-        init_tts=False,
-        cache_dir=cache_dir
-    )
+    else:
+        model = AutoModel.from_pretrained(
+            'openbmb/MiniCPM-o-2_6',
+            trust_remote_code=True,
+            attn_implementation='sdpa', # sdpa or flash_attention_2
+            torch_dtype=torch.bfloat16,
+            init_vision=True,
+            init_audio=False,
+            init_tts=False,
+            cache_dir=cache_dir
+        )
 
-    tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6', trust_remote_code=True,cache_dir=cache_dir)
+        tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6', trust_remote_code=True,cache_dir=cache_dir)
+
+    if torch.cuda.is_available():
+        model = model.eval().cuda()
+    else:
+        model = model.eval()
+
+    return model, tokenizer
