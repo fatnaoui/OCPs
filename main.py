@@ -5,5 +5,5 @@ from tools import doc_to_image, download_omni
 
 # doc_to_image(input_dir,output_dir)
 
-download_omni()
+download_omni(exist=False)
 

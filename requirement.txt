@@ -1,6 +1,16 @@
 accelerate==1.4.0
 pdf2image==1.17.0 
 tqdm==4.67.1
-librosa==0.10.2.post1 # for omni model
-torchaudio==2.2.1     # for omni model
-torch==2.2.1
+
+# to work with omni
+Pillow==10.1.0
+torch==2.3.1
+torchaudio==2.3.1
+torchvision==0.18.1
+transformers==4.44.2
+librosa==0.9.0
+soundfile==0.12.1
+vector-quantize-pytorch==1.18.5
+vocos==0.1.0
+decord
+moviepy
