@@ -8,25 +8,37 @@ from tools import ( doc_to_image,
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
 
-# input_dir = "./data" # where out data is stored
-# output_dir = "./converted_data" # where we are gonna store our data
+input_dir = "./data/input_data" # where input data is stored
+image_dir = "./data/image_data" # where we are gonna store our images data
+output_dir = "./data/output_data" # where output data from the model is stored
 
 # doc_to_image(input_dir,output_dir)
 
 omni_model , omni_tokenizer = download_omni()
 # smolvl_model, smolvl_processor = download_smolvl()
 
-image = "./converted_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0.jpg"
+image = "./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0.jpg"
 # image1 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_0.jpg"
 # # image2 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_1.jpg"
 
-prompt = "Extract the skills and the experience from the condidat's resume, in dictionary form so i can load it as json"
+prompt = """Extract the skills, experience and year of experience from the candidate's resume.
+Return the output **only** as a valid JSON dictionary, without any extra text or explanations.
+
+Format:
+{
+  "skills": ["List of relevant skills"],
+  "experience": ["List of relevant experiences"]
+}
+
+Ensure the output is **valid JSON** so it can be loaded directly into Python as a dictionary."""
+
 
 res = generate_from_omni(omni_model,omni_tokenizer,image,prompt)
-# res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
+# # res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
 
+with open('a.json','w') as f:
+    f.write(res)
 
-print(res)
 
 
 

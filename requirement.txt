@@ -16,3 +16,4 @@ vector-quantize-pytorch==1.18.5
 vocos==0.1.0
 decord
 moviepy
+flash-attn==2.7.4.post1

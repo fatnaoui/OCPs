@@ -1,6 +1,5 @@
 .env
 data/*
-converted_data/*
 models/*
 # we have created data and converted_text
 # Byte-compiled / optimized / DLL files
