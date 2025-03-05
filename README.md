@@ -10,7 +10,9 @@ Create a token from hugging face if it is your first time dealing with models fr
 Initially, access the Hugging Face hub via the notebook by executing the following commands:
 !pip install huggingface_hub
 
-huggingface-cli download --local-dir ./models/ google/gemma-2-2b-it
+huggingface-cli download --local-dir ./models/MiniCPM_o_2_6 openbmb/MiniCPM-o-2_6
+huggingface-cli download --local-dir ./models/smolvl HuggingFaceTB/SmolVLM-Instruct
+huggingface-cli download --local-dir ./models/smolvl2 HuggingFaceTB/SmolVLM-256M-Instruct
 
 Pdf2image it won't work without excuting this command
 sudo apt update

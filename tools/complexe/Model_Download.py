@@ -1,39 +1,31 @@
 import torch
-from PIL import Image
 from transformers import AutoModel, AutoTokenizer
+from transformers import AutoProcessor, AutoModelForVision2Seq
 
-cache_dir = "./models/MiniCPM_o_2_6"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def download_omni(exist=True):
-    if exist:
-        model = AutoModel.from_pretrained(
-            cache_dir,
-            trust_remote_code=True,
-            attn_implementation='sdpa', # sdpa or flash_attention_2
-            torch_dtype=torch.bfloat16,
-            init_vision=True,
-            init_audio=False,
-            init_tts=False,
-            )
-        tokenizer = AutoTokenizer.from_pretrained(cache_dir, trust_remote_code=True)
-
-    else:
-        model = AutoModel.from_pretrained(
-            'openbmb/MiniCPM-o-2_6',
-            trust_remote_code=True,
-            attn_implementation='sdpa', # sdpa or flash_attention_2
-            torch_dtype=torch.bfloat16,
-            init_vision=True,
-            init_audio=False,
-            init_tts=False,
-            cache_dir=cache_dir
-        )
-
-        tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6', trust_remote_code=True,cache_dir=cache_dir)
-
-    if torch.cuda.is_available():
-        model = model.eval().cuda()
-    else:
-        model = model.eval()
+def download_omni():
+    model = AutoModel.from_pretrained(
+        'openbmb/MiniCPM-o-2_6',
+        trust_remote_code=True,
+        attn_implementation='sdpa', 
+        torch_dtype=torch.bfloat16,
+        init_vision=True,
+        init_audio=False,
+        init_tts=False,
+    ).to(device)
+    tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6',trust_remote_code=True)
 
     return model, tokenizer
+
+def download_smolvl():
+    processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-Instruct") 
+    model = AutoModelForVision2Seq.from_pretrained(
+        "HuggingFaceTB/SmolVLM-Instruct",
+        torch_dtype=torch.bfloat16,
+        _attn_implementation="flash_attention_2" if device == "cuda" else "eager",
+        ).to(device)
+
+    return model, processor
+
+
