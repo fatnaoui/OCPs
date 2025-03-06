@@ -1,0 +1,33 @@
+{
+  "skills": [
+    "Python (4yrs)",
+    "C++ (3yrs)",
+    "SQL (1yr)",
+    "PL/SQL (1yr)",
+    "LangChain",
+    "Docker",
+    "PyTorch",
+    "HuggingFace",
+    "Jupyter Notebook",
+    "Linux",
+    "Git",
+    "Bash",
+    "Django",
+    "Keras",
+    "Scikit-Learn"
+  ],
+  "experience": [
+    {
+      "jobtitle": "Software Engineering Intern",
+      "company": "Forges de Bazas",
+      "location": "Casablanca, MA",
+      "duration": "Jul 2024 - Sep 2024"
+    },
+    {
+      "jobtitle": "Software Engineering Intern",
+      "company": "Eagle Eyes",
+      "location": "Casablanca, MA",
+      "duration": "Jul 2023 - Sep 2023"
+    }
+  ]
+}

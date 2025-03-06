@@ -14,7 +14,8 @@ def download_omni():
         init_vision=True,
         init_audio=False,
         init_tts=False,
-    ).to(device)
+    ).eval().to(device)
+
     tokenizer = AutoTokenizer.from_pretrained('openbmb/MiniCPM-o-2_6',trust_remote_code=True)
     
     return model, tokenizer
@@ -26,7 +27,7 @@ def download_smolvl():
         torch_dtype=torch.bfloat16,
         _attn_implementation="flash_attention_2" if device == "cuda" else "eager",
         trust_remote_code=True
-        ).to(device)
+        ).eval().to(device)
 
     return model, processor
 

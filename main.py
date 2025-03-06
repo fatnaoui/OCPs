@@ -22,17 +22,6 @@ image = "./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0.jpg"
 # image1 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_0.jpg"
 # # image2 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_1.jpg"
 
-# prompt = """Extract the skills, experience and year of experience from the candidate's resume.
-# Return the output **only** as a valid JSON dictionary, without any extra text or explanations.
-
-# Format:
-# {
-#   "skills": ["List of relevant skills"],
-#   "experience": ["List of relevant experiences"]
-# }
-
-# Ensure the output is **valid JSON** so it can be loaded directly into Python as a dictionary."""
-
 prompt = """Extract the skills, experience, and years of experience from the candidate's resume.
 
 Return the output **only** as a valid JSON dictionary, without any extra text, explanations, or formatting such as triple backticks.
@@ -56,7 +45,7 @@ latency = end - start
 print(f"Latency time is: {latency}")   # Latency time is: 145.90626096725464
 # # res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
 
-with open('b.json','w') as f:
+with open('c.json','w') as f:
     f.write(res)
 
 print("You Done Here")
