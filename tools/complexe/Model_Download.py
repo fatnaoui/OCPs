@@ -5,11 +5,12 @@ from transformers import AutoProcessor, AutoModelForVision2Seq
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def download_omni():
+
+    # Load the model with 4-bit precision
     model = AutoModel.from_pretrained(
-        'openbmb/MiniCPM-o-2_6',
+        "openbmb/MiniCPM-o-2_6",
         trust_remote_code=True,
-        attn_implementation='sdpa', 
-        torch_dtype=torch.bfloat16,
+        attn_implementation="sdpa", 
         init_vision=True,
         init_audio=False,
         init_tts=False,

@@ -4,6 +4,7 @@ from tools import ( doc_to_image,
                     generate_from_omni,
                     generate_from_smolvl,
                     )
+import time
 
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
@@ -32,13 +33,20 @@ Format:
 
 Ensure the output is **valid JSON** so it can be loaded directly into Python as a dictionary."""
 
+print("It starts")
 
+start = time.time()
 res = generate_from_omni(omni_model,omni_tokenizer,image,prompt)
+end = time.time()
+
+latency = end - start
+print(f"Latency time is: {latency}")   # Latency time is: 145.90626096725464
 # # res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
 
 with open('a.json','w') as f:
     f.write(res)
 
+print("You Done Here")
 
 
 
