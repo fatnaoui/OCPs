@@ -5,16 +5,21 @@ from tools import ( doc_to_image,
                     generate_from_omni_for_multiple_image
                     )
 import time
-
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
 
+# Handling The Flow of the Data
 input_dir = "./data/input_data" # where input data is stored
 image_dir = "./data/image_data" # where we are gonna store our images data
 output_dir = "./data/output_data" # where output data from the model is stored
 
+# Handling the Prompts
+resume_extract = "./prompts/resume_extraction_prompt.txt"
+
+# Converting all Resumes to Images and Store them 
 # doc_to_image(input_dir,output_dir)
 
+# Load the Model from the Cache
 omni_model , omni_tokenizer = download_omni()
 # smolvl_model, smolvl_processor = download_smolvl()
 
@@ -24,18 +29,8 @@ images = ["./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0 copy.jpg",
 # image1 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_0.jpg"
 # # image2 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_1.jpg"
 
-prompt = """Extract the skills, experience, and years of experience from the candidate's resume.
-
-Return the output **only** as a valid JSON dictionary, without any extra text, explanations, or formatting such as triple backticks.
-
-Ensure that the response is a **raw JSON object** that can be directly parsed in Python.
-
-Format:
-{
-  "skills": ["List of relevant skills"],
-  "experience": ["List of relevant experiences (don't miss responsibilities)"]
-}
-"""
+with open(resume_extract,'r') as f:
+  prompt = f.read()
 
 print("It starts")
 
