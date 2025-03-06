@@ -1,8 +1,6 @@
 from tools import ( doc_to_image, 
-                    download_omni, 
-                    download_smolvl,
-                    generate_from_omni,
-                    generate_from_omni_for_multiple_image
+                    resume_extraction,
+                    download_omni,
                     )
 import time
 import warnings
@@ -16,29 +14,47 @@ output_dir = "./data/output_data" # where output data from the model is stored
 # Handling the Prompts
 resume_extraction_prompt = "./prompts/resume_extraction_prompt.txt"
 
-# Converting all Resumes to Images and Store them 
-# doc_to_image(input_dir,output_dir)
+def main():
+  choice = input("Hello Ms, type 'y' if you wanna work with the local model, and 'n' if not: ")
 
-# Load the Model from the Cache
-omni_model , omni_tokenizer = download_omni()
+  while choice != 'y' and choice != 'n' :
+    choice = input("you enterd a different character, try again: ")
 
-with open(resume_extraction_prompt,'r') as f:
-  prompt = f.read()
+  if choice == 'y':
 
-print("It starts")
+    # Load the Model from the Cache
+    try:
+      print("The model is being loaded ...")
+      model , tokenizer = download_omni()
+      print("The Model was Loaded")
+    except Exception as e:
+      print(f"Error while trying to load the model {e}")
+      return 
 
-start = time.time()
-res = generate_from_omni_for_multiple_image(omni_model,omni_tokenizer,prompt,images)
-end = time.time()
+    # Converting all Resumes to Images and Store them 
+    try:
+      print("Converting from docs to images ...")
+      doc_to_image(input_dir,image_dir)
+      print("Doc to Image Done")
+    except Exception as e:
+      print(f"Error while trying to convert documents to images {e}")
+      return 
 
-latency = end - start
-print(f"Latency time is: {latency}")   # Latency time is: 145.90626096725464
-# res = generate_from_smolvl(smolvl_model,smolvl_processor,prompt,image)
+    try:
+      print("Information is being extracted")
+      resume_extraction(image_dir,output_dir,model,tokenizer,resume_extraction_prompt)
+      print(f"Done, Visit {output_dir} to see your extracted information")
+    except Exception as e:
+      print(f"Error while trying to extract information {e}")
+      return 
 
-with open('twoImage.json','w') as f:
-    f.write(res)
+  else:
+    print("API part will be available soon")
 
-print("You Done Here")
+if __name__=='__main__':
+  main()
+  
+
 
 
   

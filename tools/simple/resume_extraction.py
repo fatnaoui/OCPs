@@ -1,4 +1,4 @@
-from tools import generate_from_omni_for_multiple_image
+from tools.complexe import generate_from_omni_for_multiple_image
 
 import os
 from tqdm import tqdm
