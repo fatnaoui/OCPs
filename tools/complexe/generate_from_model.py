@@ -6,11 +6,13 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 def generate_from_omni(model,tokenizer,image,prompt):
     image = Image.open(image).convert('RGB')
     msgs = [{'role': 'user', 'content': [image, prompt]}]
-    res = model.chat(
-        image=None,
-        msgs=msgs,
-        tokenizer=tokenizer
-    )
+
+    with torch.no_grad():
+        res = model.chat(
+            image=None,
+            msgs=msgs,
+            tokenizer=tokenizer
+        )
     return res
 
 def generate_from_smolvl(model,processor,image,prompt):

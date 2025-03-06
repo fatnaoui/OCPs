@@ -31,7 +31,7 @@ Ensure that the response is a **raw JSON object** that can be directly parsed in
 Format:
 {
   "skills": ["List of relevant skills"],
-  "experience": ["List of relevant experiences"]
+  "experience": ["List of relevant experiences (don't miss responsibilities)"]
 }
 """
 
@@ -45,7 +45,7 @@ latency = end - start
 print(f"Latency time is: {latency}")   # Latency time is: 145.90626096725464
 # # res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
 
-with open('c.json','w') as f:
+with open('d.json','w') as f:
     f.write(res)
 
 print("You Done Here")
