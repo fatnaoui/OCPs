@@ -2,7 +2,7 @@ from tools import ( doc_to_image,
                     download_omni, 
                     download_smolvl,
                     generate_from_omni,
-                    generate_from_smolvl,
+                    generate_from_omni_for_multiple_image
                     )
 import time
 
@@ -19,6 +19,8 @@ omni_model , omni_tokenizer = download_omni()
 # smolvl_model, smolvl_processor = download_smolvl()
 
 image = "./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0.jpg"
+images = ["./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0 copy.jpg",
+          "./data/image_data/Hamza_Fatnaoui_CV/Hamza_Fatnaoui_CV_0.jpg"]
 # image1 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_0.jpg"
 # # image2 = "./converted_data/Academic___Taha_Bouhsine/Academic___Taha_Bouhsine_1.jpg"
 
@@ -37,15 +39,19 @@ Format:
 
 print("It starts")
 
+# start = time.time()
+# res = generate_from_omni(omni_model,omni_tokenizer,prompt,image)
+# end = time.time()
+
 start = time.time()
-res = generate_from_omni(omni_model,omni_tokenizer,image,prompt)
+res = generate_from_omni_for_multiple_image(omni_model,omni_tokenizer,prompt,images)
 end = time.time()
 
 latency = end - start
 print(f"Latency time is: {latency}")   # Latency time is: 145.90626096725464
-# # res = generate_from_smolvl(smolvl_model,smolvl_processor,image,prompt)
+# # res = generate_from_smolvl(smolvl_model,smolvl_processor,prompt,image)
 
-with open('d.json','w') as f:
+with open('twoImage.json','w') as f:
     f.write(res)
 
 print("You Done Here")

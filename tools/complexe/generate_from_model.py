@@ -3,7 +3,7 @@ import torch
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def generate_from_omni(model,tokenizer,image,prompt):
+def generate_from_omni(model,tokenizer,prompt,image):
     image = Image.open(image).convert('RGB')
     msgs = [{'role': 'user', 'content': [image, prompt]}]
 
@@ -15,7 +15,20 @@ def generate_from_omni(model,tokenizer,image,prompt):
         )
     return res
 
-def generate_from_smolvl(model,processor,image,prompt):
+def generate_from_omni_for_multiple_image(model,tokenizer,prompt,image_paths):
+    images = [Image.open(img_path).convert('RGB') for img_path in image_paths]
+    content = images + [prompt]
+    msgs = [{'role': 'user', 'content': content}]
+
+    with torch.no_grad():
+        res = model.chat(
+            image=None,
+            msgs=msgs,
+            tokenizer=tokenizer
+        )
+    return res
+
+def generate_from_smolvl(model,processor,prompt,image):
     image = Image.open(image).convert('RGB')
     messages = [
     {
