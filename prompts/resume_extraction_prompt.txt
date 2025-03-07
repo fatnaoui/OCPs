@@ -1,0 +1,11 @@
+Extract the skills, experience, and years of experience from the candidate's resume.
+
+Return the output **only** as a valid JSON dictionary, without any extra text, explanations, or formatting such as triple backticks.
+
+Ensure that the response is a **raw JSON object** that can be directly parsed in Python.
+
+Format:
+{
+  "skills": ["List of relevant skills"],
+  "experience": ["List of relevant experiences (don't miss responsibilities)"]
+}
