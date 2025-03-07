@@ -48,6 +48,8 @@ def main():
       print(f"Error while trying to extract information {e}")
       return 
 
+    print("You Done")
+
   else:
     print("API part will be available soon")
 
