@@ -17,7 +17,7 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file):
     with open(prompt_file,'r') as f:
         prompt = f.read()
 
-    candidates = [c for c in os.listdir(image_data) if not c.startwith(".")]
+    candidates = [c for c in os.listdir(image_data) if not c.startswith(".")]
 
     for candidate in tqdm(candidates, desc="Processing Resumes", unit="Resume"):
         candidate_path = os.path.join(image_data,candidate)
