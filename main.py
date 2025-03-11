@@ -13,8 +13,6 @@ import time
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
 
-
-
 def main():
   choice = input("Hello Ms, type 'y' if you wanna work with the local model, and 'n' if not: ").strip().lower()
 
@@ -75,11 +73,7 @@ def main():
     print("API part will be available soon")
 
 if __name__=='__main__':
-  #main()
-
-  model, tokenizer = download_bert()
-  sentence = sentence_embedding("hello All, I am the king", model, tokenizer)
-  print(sentence[0][:6])
+  main()
   
 
 
