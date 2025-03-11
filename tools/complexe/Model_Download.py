@@ -1,8 +1,14 @@
 import torch
+import random
 from transformers import AutoModel, AutoTokenizer
-from transformers import AutoProcessor, AutoModelForVision2Seq
+from transformers import BertTokenizer, BertModel
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+
+random.seed(42)
+torch.manual_seed(42)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(42)
 
 def download_omni():
 
@@ -20,15 +26,10 @@ def download_omni():
     
     return model, tokenizer
 
-def download_smolvl():
-    processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-Instruct",trust_remote_code=True) 
-    model = AutoModelForVision2Seq.from_pretrained(
-        "HuggingFaceTB/SmolVLM-Instruct",
-        torch_dtype=torch.bfloat16,
-        _attn_implementation="flash_attention_2" if device == "cuda" else "eager",
-        trust_remote_code=True
-        ).eval().to(device)
+def download_bert():
+    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    model = BertModel.from_pretrained('bert-base-uncased')
 
-    return model, processor
+    return model, tokenizer
 
 

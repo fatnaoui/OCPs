@@ -1,7 +1,10 @@
 from tools import ( doc_to_image, 
                     resume_extraction,
                     download_omni,
-                    validate_env_vars
+                    validate_env_vars,
+                    download_bert,
+                    sentence_embedding,
+                    cosine
                     )
 import os
 from dotenv import load_dotenv
@@ -9,6 +12,8 @@ load_dotenv()
 import time
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
+
+
 
 def main():
   choice = input("Hello Ms, type 'y' if you wanna work with the local model, and 'n' if not: ").strip().lower()
@@ -70,7 +75,11 @@ def main():
     print("API part will be available soon")
 
 if __name__=='__main__':
-  main()
+  #main()
+
+  model, tokenizer = download_bert()
+  sentence = sentence_embedding("hello All, I am the king", model, tokenizer)
+  print(sentence[0][:6])
   
 
 
