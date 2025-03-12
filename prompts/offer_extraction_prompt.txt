@@ -1,1 +1,20 @@
-Describe that offer
+Extract the required skills and experience from the given job offer.
+
+Ensure that the skills section includes only the specific technical and soft skills mentioned in the offer.
+The experience section must list the required years of experience, industries, and key responsibilities mentioned in the job description.
+Return the output as a valid JSON dictionary, with no extra text, explanations, or formatting (such as triple backticks).
+The JSON must be parsable in Python and must follow this format:
+{
+  "required_skills": ["List of relevant required skills from the job offer"],
+  "required_experience": {
+    "years": "Number of years of experience required",
+    "industries": ["List of industries if specified"],
+    "responsibilities": [
+      "Key responsibility 1 from the offer",
+      "Key responsibility 2 from the offer",
+      "Key responsibility 3 from the offer"
+    ]
+  }
+}
+Do not include any additional text or explanations.
+Ensure that the JSON output is formatted correctly to allow direct parsing.
