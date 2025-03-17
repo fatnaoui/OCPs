@@ -11,6 +11,9 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file):
     And we're gonna extract all the infromation in condidate's resume, and
     store it as json file to work with it later'''
 
+    if not os.path.exists(output_data):
+        os.mkdir(output_data)
+
     if not os.path.isdir(image_data):
         raise ValueError(f"Invalid directory path: {image_data}")
 

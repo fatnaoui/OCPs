@@ -1,7 +1,10 @@
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
 
-def sentence_embedding(sentence, model, tokenizer):
+def sentence_embedding(sentence_json, model, tokenizer):
+    with open(sentence_json,'r') as f:
+        sentence = f.read()
+        
     text_encoding = tokenizer.batch_encode_plus(
         [sentence],
         padding=True,
