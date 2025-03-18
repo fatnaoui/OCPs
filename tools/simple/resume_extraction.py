@@ -1,4 +1,10 @@
-from tools.complexe import generate_from_omni_for_multiple_image
+from typing import Any
+
+
+from tools.complexe import (generate_from_omni_for_multiple_image,
+                            clean_json
+                            )
+                            
 
 import os
 from tqdm import tqdm
@@ -38,10 +44,12 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file):
         condidate_output_path = os.path.join(output_data,f"{candidate}.json")
 
         try:
-            res = generate_from_omni_for_multiple_image(model,tokenizer,prompt,candidate_cv_pages)
+            ress: str = generate_from_omni_for_multiple_image(model,tokenizer,prompt,candidate_cv_pages)
+            res: str = clean_json(ress)
 
             with open(condidate_output_path,'w') as f:
                 f.write(res)
+                
         except Exception as e:
             print("Error processing {condidate}: {e}")
             continue

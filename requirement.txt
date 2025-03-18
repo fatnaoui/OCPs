@@ -2,6 +2,7 @@ accelerate==1.4.0
 pdf2image==1.17.0 
 tqdm==4.67.1
 python-dotenv==1.0.1
+sentence-transformers==3.4.1
 
 # to work with omni
 transformers==4.44.2  

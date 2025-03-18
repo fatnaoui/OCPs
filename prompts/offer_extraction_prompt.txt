@@ -1,20 +1,42 @@
-Extract the required skills and experience from the given job offer.
+Extract the **required skills** and **experience** from the given job offer.
 
-Ensure that the skills section includes only the specific technical and soft skills mentioned in the offer.
-The experience section must list the required years of experience, industries, and key responsibilities mentioned in the job description.
-Return the output as a valid JSON dictionary, with no extra text, explanations, or formatting (such as triple backticks).
-The JSON must be parsable in Python and must follow this format:
+### **Instructions:**
+- Return the output as **valid JSON**, directly parsable in Python.
+- **Do not** include explanations, formatting (like triple backticks), or extra text.
+- **Extract only explicitly mentioned skills and required experiences.**
+- **Ensure that experience is a flat list of required job experience descriptions**.
+
+### **Example Job Offers & Expected Outputs:**
+
+#### **Example 1:**
+**Job Offer Input:**
+We are looking for a **Software Engineer** with at least **3 years of experience** in the **Tech and AI industry**.  
+The candidate must have expertise in:
+- **Python, C++, SQL, Docker, and Cloud Computing**.
+- Experience in **Machine Learning and NLP** is preferred.
+Previous experience should include:
+- Working on scalable backend systems.
+- Managing databases and writing optimized SQL queries.
+- Deploying containerized applications with Docker.
+- Implementing AI models in production.
+
+**Expected JSON Output:**
+```json
 {
-  "required_skills": ["List of relevant required skills from the job offer"],
-  "required_experience": {
-    "years": "Number of years of experience required",
-    "industries": ["List of industries if specified"],
-    "responsibilities": [
-      "Key responsibility 1 from the offer",
-      "Key responsibility 2 from the offer",
-      "Key responsibility 3 from the offer"
+    "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "Docker",
+        "Cloud Computing",
+        "Machine Learning",
+        "NLP"
+    ],
+    "experience": [
+        "At least 3 years of experience in Tech and AI industry",
+        "Working on scalable backend systems",
+        "Managing databases and writing optimized SQL queries",
+        "Deploying containerized applications with Docker",
+        "Implementing AI models in production"
     ]
-  }
 }
-Do not include any additional text or explanations.
-Ensure that the JSON output is formatted correctly to allow direct parsing.

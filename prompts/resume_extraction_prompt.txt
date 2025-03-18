@@ -1,24 +1,36 @@
-Extract the skills, experience, and years of experience from the candidate's resume.
+Extract the **skills** and **experience** from the candidate's resume.
 
-- Ensure that the "experience" section includes a detailed list of responsibilities for each job.
-- Return the output only as a valid JSON dictionary, without any extra text, explanations, or formatting such as triple backticks.
-- The JSON must be parsable in Python and must follow this format:
+### **Instructions:**
+- Return the output as **valid JSON**, directly parsable in Python.
+- **Do not** include explanations, formatting (like triple backticks), or extra text.
+- **Ensure every job experience is a simple text entry** instead of a structured object.
+- **List only skills and experiences**.
+
+### **Example Resumes & Expected Outputs:**
+
+#### **Example 1:**
+**Resume Input:**
+John Doe is a software engineer with expertise in **Python, C++, SQL, Docker, and Machine Learning**.  
+He has worked at **Tech Solutions Inc.** from **2019 to 2023**, where he:
+- Developed scalable applications using Python and C++.
+- Optimized database queries using SQL.
+- Deployed and managed applications with Docker.
+- Led a team of 5 engineers to improve system performance.
+
+**Expected JSON Output:**
+```json
 {
-  "skills": ["List of relevant skills with years of experience if available"],
-  "experience": [
-    {
-      "position": "Job Title",
-      "company": "Company Name",
-      "location": "Job Location",
-      "startDate": "MM/YYYY or YYYY",
-      "endDate": "MM/YYYY or 'Present' if currently employed",
-      "responsibilities": [
-        "Detailed responsibility 1",
-        "Detailed responsibility 2",
-        "Detailed responsibility 3"
-      ]
-    }
-  ]
+    "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "Docker",
+        "Machine Learning"
+    ],
+    "experience": [
+        "Developed scalable applications using Python and C++",
+        "Optimized database queries using SQL",
+        "Deployed and managed applications with Docker",
+        "Led a team of 5 engineers to improve system performance"
+    ]
 }
-- Do not omit responsibilities.
-- Ensure that the JSON output does not include triple backticks or any extra formatting so that it can be directly parsed.

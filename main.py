@@ -2,7 +2,9 @@ from tools import ( doc_to_image,
                     resume_extraction,
                     download_omni,
                     validate_env_vars,
-                    similarity_with_bert
+                    similarity_with_bert,
+                    similarity_with_sbert,
+                    clean_json
                     )
 import os
 from dotenv import load_dotenv
@@ -14,19 +16,19 @@ warnings.simplefilter("ignore", FutureWarning)
 def main():
 
   # Validate required environment variables
-  try:
-      validate_env_vars("INPUT_RESUME", "IMAGE_RESUME", "OUTPUT_RESUME",
-            "INPUT_OFFER", "IMAGE_OFFER", "OUTPUT_OFFER",
-            "RESUME_EXTRACTION_PROMPT", "OFFER_EXTRACTION_PROMPT")
-  except ValueError as e:
-      print(f"{e}")
-      return
+  # try:
+  #     validate_env_vars("INPUT_RESUME", "IMAGE_RESUME", "OUTPUT_RESUME",
+  #           "INPUT_OFFER", "IMAGE_OFFER", "OUTPUT_OFFER",
+  #           "RESUME_EXTRACTION_PROMPT", "OFFER_EXTRACTION_PROMPT")
+  # except ValueError as e:
+  #     print(f"{e}")
+  #     return
 
-  # Converting all DOCs to Images and Store them 
-  conversions = [
-          ("Resume", os.getenv("INPUT_RESUME"), os.getenv("IMAGE_RESUME")),
-          ("Offer", os.getenv("INPUT_OFFER"), os.getenv("IMAGE_OFFER"))
-      ]
+  # # Converting all DOCs to Images and Store them 
+  # conversions = [
+  #         ("Resume", os.getenv("INPUT_RESUME"), os.getenv("IMAGE_RESUME")),
+  #         ("Offer", os.getenv("INPUT_OFFER"), os.getenv("IMAGE_OFFER"))
+  #     ]
   # for doc_type, input_path, image_path in conversions:
   #   try:
   #       print(f"Converting {doc_type} documents to images ...")
@@ -43,20 +45,20 @@ def main():
 
   # if choice == 'y':
 
-  #   # Load the Model from the Cache
-  #   try:
-  #     print("The model is being loaded ...")
-  #     model , tokenizer = download_omni()
-  #     print("The Model was Loaded")
-  #   except Exception as e:
-  #     print(f"Error while trying to load the model {e}")
-  #     return 
+    # Load the Model from the Cache
+    # try:
+    #   print("The model is being loaded ...")
+    #   model , tokenizer = download_omni()
+    #   print("The Model was Loaded")
+    # except Exception as e:
+    #   print(f"Error while trying to load the model {e}")
+    #   return 
 
-  #   # Information Extraction 
-  #   extractions = [
-  #           ("Resume", os.getenv("IMAGE_RESUME"), os.getenv("OUTPUT_RESUME"), os.getenv("RESUME_EXTRACTION_PROMPT")),
-  #           ("Offer", os.getenv("IMAGE_OFFER"), os.getenv("OUTPUT_OFFER"), os.getenv("OFFER_EXTRACTION_PROMPT"))
-  #       ]
+    # Information Extraction 
+    extractions = [
+            ("Resume", os.getenv("IMAGE_RESUME"), os.getenv("OUTPUT_RESUME"), os.getenv("RESUME_EXTRACTION_PROMPT")),
+            ("Offer", os.getenv("IMAGE_OFFER"), os.getenv("OUTPUT_OFFER"), os.getenv("OFFER_EXTRACTION_PROMPT"))
+        ]
   #   for doc_type, image_path, output_path, prompt in extractions:
   #     try:
   #       print(f"{doc_type} is being extracted")
@@ -68,14 +70,22 @@ def main():
 
   #   print("You Done Extracting Information")
 
-
-
   # else:
   #   print("API part will be available soon")
 
-  similarity_with_bert()  
+  # choice = input("To get the score, choose a method: 'b' for using BERT, and 's' for using SBERT: ").strip().lower()
 
+  # while choice not in ('b','s'):
+  #   choice = input("You enterd a different character, try again: ").strip().lower()
 
+  # if choice == 'b':
+  #   similarity_with_bert()
+  # else:
+  #   similarity_with_sbert()
+    with open("test/data_science.json", 'r') as f:
+      res = f.read()
+    res = clean_json(res)
+    print(res)
 
 if __name__=='__main__':
   main()

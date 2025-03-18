@@ -1,0 +1,25 @@
+{
+  "name": "John Doe",
+  "skills": [
+      "Python",
+      "C++",
+      "SQL",
+      "Docker",
+      "Linux",
+      "Git",
+      "Machine Learning",
+      "Deep Learning",
+      "Natural Language Processing",
+      "Cloud Computing"
+  ],
+  "experience": [
+      "Developed scalable applications using Python and C++",
+      "Optimized database queries using SQL, improving performance by 30%",
+      "Deployed and managed containerized applications using Docker",
+      "Configured and maintained Linux-based production servers",
+      "Worked with cross-functional teams using Git for version control",
+      "Implemented and trained Machine Learning models for predictive analytics",
+      "Built NLP models to process and analyze large text datasets",
+      "Managed cloud infrastructure for hosting AI models and data pipelines"
+  ]
+}
