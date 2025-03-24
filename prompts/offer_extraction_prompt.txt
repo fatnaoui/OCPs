@@ -21,7 +21,6 @@ Previous experience should include:
 - Implementing AI models in production.
 
 **Expected JSON Output:**
-```json
 {
     "skills": [
         "Python",

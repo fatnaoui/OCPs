@@ -1,0 +1,14 @@
+{
+    "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "Docker",
+        "Linux",
+        "Git"
+    ],
+    "experience": [
+        "At least 2+ years of experience in software engineering or related fields",
+        "Experience with container orchestration (Kubernetes is a plus)"
+    ]
+}

@@ -7,7 +7,7 @@ import torch
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def generate_from_omni(model,tokenizer,prompt,image):
-    image = Image.open(image).convert('RGB')
+    image = Image.open(image).convert('L')
     msgs = [{'role': 'user', 'content': [image, prompt]}]
 
     with torch.no_grad():
@@ -19,7 +19,7 @@ def generate_from_omni(model,tokenizer,prompt,image):
     return res
 
 def generate_from_omni_for_multiple_image(model,tokenizer,prompt,image_paths):
-    images = [Image.open(img_path).convert('RGB') for img_path in image_paths]
+    images = [Image.open(img_path).convert('L') for img_path in image_paths]
     content = images + [prompt]
     msgs = [{'role': 'user', 'content': content}]
 

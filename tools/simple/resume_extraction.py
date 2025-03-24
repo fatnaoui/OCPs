@@ -12,7 +12,7 @@ import time
 
 
 
-def resume_extraction(image_data,output_data,model,tokenizer,prompt_file):
+def resume_extraction(image_data,output_data,model,tokenizer,prompt_file,doc_type):
     '''Here, we are assuming that data 'resumes' is already converted to images,
     And we're gonna extract all the infromation in condidate's resume, and
     store it as json file to work with it later'''
@@ -28,7 +28,7 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file):
 
     candidates = [c for c in os.listdir(image_data) if not c.startswith(".")]
 
-    for candidate in tqdm(candidates, desc="Processing Resumes", unit="Resume"):
+    for candidate in tqdm(candidates, desc=f"Processing {doc_type}", unit=doc_type):
         candidate_path = os.path.join(image_data,candidate)
 
         # Validate candidate path

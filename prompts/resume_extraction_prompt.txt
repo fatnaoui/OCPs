@@ -3,7 +3,7 @@ Extract the **skills** and **experience** from the candidate's resume.
 ### **Instructions:**
 - Return the output as **valid JSON**, directly parsable in Python.
 - **Do not** include explanations, formatting (like triple backticks), or extra text.
-- **Ensure every job experience is a simple text entry** instead of a structured object.
+- **Ensure every job experience is a text entry** instead of a structured object.
 - **List only skills and experiences**.
 
 ### **Example Resumes & Expected Outputs:**
@@ -18,7 +18,6 @@ He has worked at **Tech Solutions Inc.** from **2019 to 2023**, where he:
 - Led a team of 5 engineers to improve system performance.
 
 **Expected JSON Output:**
-```json
 {
     "skills": [
         "Python",
