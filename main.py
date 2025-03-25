@@ -85,10 +85,9 @@ def main():
   similarity_with_sbert()
 
 if __name__=='__main__':
-  # main()
+  main()
 
-  print("similarity_with_sbert")
-  similarity_with_sbert()
+ 
   
 
 

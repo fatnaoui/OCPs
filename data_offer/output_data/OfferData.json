@@ -1,0 +1,33 @@
+{
+  "skills": [
+    "Python",
+    "PyTorch",
+    "Transformers",
+    "HuggingFace",
+    "GPT",
+    "BERT",
+    "LLaMA",
+    "Groq API",
+    "Q&A extraction techniques",
+    "TF-IDF",
+    "neural networks",
+    "OpenCV",
+    "KNN",
+    "SQL",
+    "C++",
+    "PL/SQL",
+    "Git",
+    "Docker",
+    "Linux",
+    "Bash"
+  ],
+  "experience": [
+    "Strong proficiency in Python (4+ years)",
+    "Experience with PyTorch, Transformers, and HuggingFace",
+    "Solid foundation in Machine Learning, Deep Learning, and NLP",
+    "Proficiency with Git, Docker, Linux, and Bash",
+    "Experience in model fine-tuning, pipeline optimization, and AI infrastructure",
+    "Working knowledge of SQL, C++, and PL/SQL",
+    "Familiarity with OpenCV and computer vision concepts"
+  ]
+}

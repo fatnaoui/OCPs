@@ -43,7 +43,7 @@ def similarity_with_sbert():
         extracted_offer_data = extract_skills_and_description(offer_path)
 
         experience_offer_embeddings = model.encode(extracted_offer_data["experience"])
-        print(experience_offer_embeddings.shape)
+        skills_offer_embeddings = model.encode(extracted_offer_data["skills"])
 
         for candidate in os.listdir(condidate_json):
             if candidate.startswith("."):
@@ -53,7 +53,7 @@ def similarity_with_sbert():
             extracted_resume_data = extract_skills_and_description(candidate_path)
 
             experience_resume_embeddings = model.encode(extracted_resume_data["experience"])
-            print(experience_resume_embeddings.shape)
+            skills_resume_embeddings = model.encode(extracted_resume_data["skills"])
             
             # Experience similarity using SBERT
             experience_similarities = model.similarity(experience_offer_embeddings, experience_resume_embeddings)
@@ -61,12 +61,20 @@ def similarity_with_sbert():
             expereince_similarity = max_experience_similarities.mean().item()
 
             # Skills similarity using lexical score
-            skills_similarity = skills_score(extracted_offer_data["skills"],extracted_resume_data["skills"])
+            skills_similarity_lex = skills_score(extracted_offer_data["skills"],extracted_resume_data["skills"])
             
-            # Over all similarity
-            similarity = (expereince_similarity + skills_similarity) / 2
+            # Skills similarity using SBERT
+            skills_similarities = model.similarity(skills_offer_embeddings, skills_resume_embeddings)
+            max_skills_similarities, _  = skills_similarities.max(dim=1)
+            skills_similarity_sbert = max_skills_similarities.mean().item()
 
-            print(f"The score for the candidate {candidate_name} in {offer_name} offer is {similarity:.2f}")
+            # Over all similarity
+            similarity_lex = (expereince_similarity*0.75 + skills_similarity_lex*0.25) / 2
+            similarity_sbert = (expereince_similarity*0.75 + skills_similarity_sbert*0.25) / 2
+
+            print(f"The score for the candidate {candidate_name} in {offer_name} offer using lex is {similarity_lex*100:.2f}")
+            print(f"The score for the candidate {candidate_name} in {offer_name} offer using sbert is {similarity_sbert*100:.2f}")
+            print()
 
             
 def skills_score(offer_skills,candidate_skills):

@@ -1,10 +1,8 @@
 Extract the required skills and experience from the given job offer.
-
-**Instructions:**
+- The skills list must contain only simple *words* (e.g., "Python", "Docker").
 - Return the output as valid JSON, directly parsable in Python.
 - Do not include explanations, formatting (like triple backticks), or extra text.
 - Extract only explicitly mentioned skills and required experiences.
-- The skills list must contain only simple words or phrases (e.g., "Python", "Docker").
 - The experience list must contain full sentences describing what is required.
 - Do not use nested structures — keep both lists flat.
 
