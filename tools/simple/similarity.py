@@ -43,6 +43,7 @@ def similarity_with_sbert():
         extracted_offer_data = extract_skills_and_description(offer_path)
 
         experience_offer_embeddings = model.encode(extracted_offer_data["experience"])
+        print(experience_offer_embeddings.shape)
 
         for candidate in os.listdir(condidate_json):
             if candidate.startswith("."):
@@ -52,7 +53,8 @@ def similarity_with_sbert():
             extracted_resume_data = extract_skills_and_description(candidate_path)
 
             experience_resume_embeddings = model.encode(extracted_resume_data["experience"])
-
+            print(experience_resume_embeddings.shape)
+            
             # Experience similarity using SBERT
             experience_similarities = model.similarity(experience_offer_embeddings, experience_resume_embeddings)
             max_experience_similarities, _  = experience_similarities.max(dim=1)

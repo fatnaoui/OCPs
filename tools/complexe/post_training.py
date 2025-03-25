@@ -7,12 +7,12 @@ from typing import Any
 import json
 
 skills_variations = [
-    "skills", "abilities", "competencies", "expertise", "technicalSkills",
+    "skills", "required_skills", "abilities", "competencies", "expertise", "technicalSkills",
     "softSkills", "hardSkills", "proficiencies", "capabilities", "qualifications",
     "strengths", "talents", "specialties", "knowledgeAreas"
 ]
 experience_variations = [
-    "experience","experiences" , "workHistory", "employment", "jobs",
+    "experience","experiences" , "required_experience", "workHistory", "employment", "jobs",
     "jobExperience","professionalExperience", "careerHistory", "employmentHistory",
     "pastRoles", "workExperience", "positionsHeld", "workRecord", "description",
     "descriptions","jobDescription", "roleDescription", "workDuties", "jobDuties",
