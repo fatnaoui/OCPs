@@ -56,13 +56,13 @@ def main():
 
     # Information Extraction 
     extractions = [
-            ("Resume", os.getenv("IMAGE_RESUME"), os.getenv("OUTPUT_RESUME"), os.getenv("RESUME_EXTRACTION_PROMPT")),
-            ("Offer", os.getenv("IMAGE_OFFER"), os.getenv("OUTPUT_OFFER"), os.getenv("OFFER_EXTRACTION_PROMPT"))
+            ("Resume", os.getenv("IMAGE_RESUME"), os.getenv("OUTPUT_RESUME"), os.getenv("RESUME_EXTRACTION_PROMPT"), os.getenv("RESUME_EXAMPLE"), os.getenv("RESUME_EXAMPLE_OUTPUT")),
+            # ("Offer", os.getenv("IMAGE_OFFER"), os.getenv("OUTPUT_OFFER"), os.getenv("OFFER_EXTRACTION_PROMPT"))
         ]
-    for doc_type, image_path, output_path, prompt in extractions:
+    for doc_type, image_path, output_path, prompt, image_example, image_output_example  in extractions:
       try:
         print(f"{doc_type} is being extracted")
-        resume_extraction(image_path,output_path,model,tokenizer,prompt,doc_type)
+        resume_extraction(image_path,output_path,model,tokenizer,prompt,doc_type, image_example, image_output_example)
         print(f"{doc_type} was extracted")
       except Exception as e:
         print(f"Error while trying to extract {doc_type} information {e}")
@@ -73,16 +73,16 @@ def main():
   else:
     print("API part will be available soon")
 
-  choice = input("To get the score, choose a method: 'b' for using BERT, and 's' for using SBERT: ").strip().lower()
+  # choice = input("To get the score, choose a method: 'b' for using BERT, and 's' for using SBERT: ").strip().lower()
 
-  while choice not in ('b','s'):
-    choice = input("You enterd a different character, try again: ").strip().lower()
+  # while choice not in ('b','s'):
+  #   choice = input("You enterd a different character, try again: ").strip().lower()
 
-  print("Similarity using BESRT")
-  similarity_with_bert()
-  print()
-  print("similarity_with_sbert")
-  similarity_with_sbert()
+  # print("Similarity using BESRT")
+  # similarity_with_bert()
+  # print()
+  # print("similarity_with_sbert")
+  # similarity_with_sbert()
 
 if __name__=='__main__':
   main()

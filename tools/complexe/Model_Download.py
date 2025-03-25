@@ -16,7 +16,8 @@ def download_omni():
     model = AutoModel.from_pretrained(
         "openbmb/MiniCPM-o-2_6",
         trust_remote_code=True,
-        attn_implementation="sdpa", 
+        attn_implementation="sdpa",
+        torch_dtype=torch.bfloat16,
         init_vision=True,
         init_audio=False,
         init_tts=False,

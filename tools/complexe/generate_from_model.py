@@ -1,6 +1,5 @@
 from typing import Any
 
-
 from PIL import Image
 import torch
 
@@ -18,10 +17,15 @@ def generate_from_omni(model,tokenizer,prompt,image):
         )
     return res
 
-def generate_from_omni_for_multiple_image(model,tokenizer,prompt,image_paths):
+def generate_from_omni_for_multiple_image(model,tokenizer,prompt,image_paths,image_example,image_output_example):
+
     images = [Image.open(img_path).convert('L') for img_path in image_paths]
     content = images + [prompt]
-    msgs = [{'role': 'user', 'content': content}]
+
+    msgs = [
+            {'role': 'user', 'content': [image_example, prompt]}, {'role': 'assistant', 'content': [image_output_example]},
+            {'role': 'user', 'content': content}
+            ]
 
     with torch.no_grad():
         res: str = model.chat(

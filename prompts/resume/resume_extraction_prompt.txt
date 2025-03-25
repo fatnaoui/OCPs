@@ -1,0 +1,8 @@
+Extract the **skills** and **experience** from the candidate's resume.
+
+### **Instructions:**
+- Return the output as **valid JSON**, directly parsable in Python.
+- **Do not** include explanations, formatting (like triple backticks), or extra text.
+- **Ensure every item in skills and experience is a simple string (sentence or word).
+- **List only skills and experiences**.
+
