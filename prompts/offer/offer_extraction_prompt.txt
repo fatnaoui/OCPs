@@ -1,41 +1,10 @@
-Extract the **required skills** and **experience** from the given job offer.
+Extract the required skills and experience from the given job offer.
 
-### **Instructions:**
-- Return the output as **valid JSON**, directly parsable in Python.
-- **Do not** include explanations, formatting (like triple backticks), or extra text.
-- **Extract only explicitly mentioned skills and required experiences.**
-- **Ensure that experience is a flat list of required job experience descriptions**.
+**Instructions:**
+- Return the output as valid JSON, directly parsable in Python.
+- Do not include explanations, formatting (like triple backticks), or extra text.
+- Extract only explicitly mentioned skills and required experiences.
+- The skills list must contain only simple words or phrases (e.g., "Python", "Docker").
+- The experience list must contain full sentences describing what is required.
+- Do not use nested structures — keep both lists flat.
 
-### **Example Job Offers & Expected Outputs:**
-
-#### **Example 1:**
-**Job Offer Input:**
-We are looking for a **Software Engineer** with at least **3 years of experience** in the **Tech and AI industry**.  
-The candidate must have expertise in:
-- **Python, C++, SQL, Docker, and Cloud Computing**.
-- Experience in **Machine Learning and NLP** is preferred.
-Previous experience should include:
-- Working on scalable backend systems.
-- Managing databases and writing optimized SQL queries.
-- Deploying containerized applications with Docker.
-- Implementing AI models in production.
-
-**Expected JSON Output:**
-{
-    "skills": [
-        "Python",
-        "C++",
-        "SQL",
-        "Docker",
-        "Cloud Computing",
-        "Machine Learning",
-        "NLP"
-    ],
-    "experience": [
-        "At least 3 years of experience in Tech and AI industry",
-        "Working on scalable backend systems",
-        "Managing databases and writing optimized SQL queries",
-        "Deploying containerized applications with Docker",
-        "Implementing AI models in production"
-    ]
-}

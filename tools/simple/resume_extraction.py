@@ -52,9 +52,10 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file,doc_typ
         try:
             ress: str = generate_from_omni_for_multiple_image(model,tokenizer,prompt,candidate_cv_pages,image_example,output)
             res: str = clean_json(ress)
-
+            print("candidate")
             with open(condidate_output_path,'w') as f:
                 f.write(res)
+            print("writted")
                 
         except Exception as e:
             print("Error processing {condidate}: {e}")
