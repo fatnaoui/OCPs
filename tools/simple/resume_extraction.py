@@ -30,7 +30,7 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file,doc_typ
     try:
         image_example = Image.open(image_example).convert('L')
         with open(image_output_example,'r') as f:
-            output = f.read()
+            image_output_example = f.read()
     except Exception as e:
         print(f"{e}")
 
@@ -50,15 +50,13 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file,doc_typ
         condidate_output_path = os.path.join(output_data,f"{candidate}.json")
 
         try:
-            ress: str = generate_from_omni_for_multiple_image(model,tokenizer,prompt,candidate_cv_pages,image_example,output)
+            ress: str = generate_from_omni_for_multiple_image(model,tokenizer,prompt,candidate_cv_pages,image_example,image_output_example=image_output_example)
             res: str = clean_json(ress)
-            print("candidate")
             with open(condidate_output_path,'w') as f:
                 f.write(res)
-            print("writted")
                 
         except Exception as e:
-            print("Error processing {condidate}: {e}")
+            print(f"Error processing {candidate}: {e}")
             continue
     
     print("You extracted data is ready to analyse")

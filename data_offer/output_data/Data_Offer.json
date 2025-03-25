@@ -1,0 +1,20 @@
+{
+  "required_skills": [
+    "Python",
+    "C++",
+    "SQL",
+    "Docker",
+    "Linux",
+    "Git"
+  ],
+  "required_experience": [
+    "Developing scalable applications using Python and C++",
+    "Optimizing database queries using SQL",
+    "Deploying and managing applications with Docker",
+    "Maintaining and configuring Linux servers",
+    "Collaborating with teams using Git for version control",
+    "Implementing and training Machine Learning models",
+    "Working with NLP models for text processing",
+    "Managing cloud infrastructure for AI deployments"
+  ]
+}
