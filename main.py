@@ -1,3 +1,4 @@
+from sympy.functions.elementary.piecewise import ExprCondPair
 from tools import ( doc_to_image, 
                     resume_extraction,
                     download_omni,
@@ -78,14 +79,19 @@ def main():
   while choice not in ('b','s'):
     choice = input("You enterd a different character, try again: ").strip().lower()
 
-  print("Similarity using BESRT")
-  similarity_with_bert()
-  print()
+  # print("Similarity using BESRT")
+  # similarity_with_bert()
+  # print()
   print("similarity_with_sbert")
   similarity_with_sbert()
 
 if __name__=='__main__':
-  main()
+  # main()
+
+  print("similarity_with_sbert")
+  similarity_with_sbert()
+  
+
 
  
   

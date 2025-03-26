@@ -1,9 +1,5 @@
 from typing_extensions import LiteralString
-
-
 from typing import Any
-
-
 import json
 
 skills_variations = [
@@ -51,6 +47,8 @@ def extract_skills_and_description(json_file):
         if skill in data:
             extracted_data["skills"] = data[skill]
             break
+
+    extracted_data["skills"] = [f"I have used {skill} to solve real-world problems in software development." for skill in extracted_data["skills"]]
 
     for experience in experience_variations:
         if experience in data:

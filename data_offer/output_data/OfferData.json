@@ -1,33 +1,35 @@
 {
   "skills": [
     "Python",
+    "C++",
+    "SQL",
+    "Docker",
+    "Linux",
+    "Git",
     "PyTorch",
     "Transformers",
     "HuggingFace",
-    "GPT",
-    "BERT",
-    "LLaMA",
-    "Groq API",
-    "Q&A extraction techniques",
-    "TF-IDF",
-    "neural networks",
+    "Machine Learning",
+    "Deep Learning",
+    "Natural Language Processing (NLP)",
     "OpenCV",
-    "KNN",
+    "Computer vision concepts",
     "SQL",
     "C++",
-    "PL/SQL",
-    "Git",
-    "Docker",
-    "Linux",
-    "Bash"
+    "PL/SQL"
   ],
   "experience": [
+    "Ensure scalability and performance through code optimization and effective use of resources",
     "Strong proficiency in Python (4+ years)",
     "Experience with PyTorch, Transformers, and HuggingFace",
     "Solid foundation in Machine Learning, Deep Learning, and NLP",
     "Proficiency with Git, Docker, Linux, and Bash",
     "Experience in model fine-tuning, pipeline optimization, and AI infrastructure",
     "Working knowledge of SQL, C++, and PL/SQL",
-    "Familiarity with OpenCV and computer vision concepts"
+    "Familiarity with OpenCV and computer vision concepts",
+    "Experience with large language models (LLMs) and custom dataset training",
+    "Hands-on work in document automation or Q&A systems",
+    "Bachelor's or Master's in Computer Science, Software Engineering, or related field",
+    "Excellent communication in English and French"
   ]
 }

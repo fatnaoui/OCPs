@@ -1,13 +1,18 @@
 {
-  "required_skills": [
+  "skills": [
     "Python",
     "C++",
     "SQL",
     "Docker",
     "Linux",
-    "Git"
+    "Git",
+    "Machine Learning",
+    "Deep Learning",
+    "Natural Language Processing (NLP)",
+    "Cloud Computing",
+    "Deployment strategies"
   ],
-  "required_experience": [
+  "experience": [
     "Developing scalable applications using Python and C++",
     "Optimizing database queries using SQL",
     "Deploying and managing applications with Docker",
