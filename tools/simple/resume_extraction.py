@@ -28,7 +28,8 @@ def resume_extraction(image_data,output_data,model,tokenizer,prompt_file,doc_typ
     candidates = [c for c in os.listdir(image_data) if not c.startswith(".")]
 
     try:
-        image_example = Image.open(image_example).convert('L')
+        with Image.open(image_example) as img:
+            image_example = img.convert('L')
         with open(image_output_example,'r') as f:
             image_output_example = f.read()
     except Exception as e:

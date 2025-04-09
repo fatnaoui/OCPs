@@ -2,6 +2,8 @@ from pdf2image import convert_from_path
 import os
 from tqdm import tqdm
 import tempfile; import subprocess; import glob
+from multiprocessing import Pool, cpu_count
+from functools import partial
 
 # pdf to image
 def pdf_to_image(file_input_path,output_path,condidatname,filename):
@@ -32,6 +34,24 @@ def docx_to_image(file_input_path,output_path,condidatname,filename):
         # Convert PDF to images
         pdf_to_image(temp_pdf_path,output_path,condidatname,filename)
 
+def process_single_file(input_dir, output_dir, filename):
+    if not filename.endswith((".pdf", ".docx")):
+        return
+
+    condidatname = os.path.splitext(filename)[0]
+    file_input_path = os.path.join(input_dir, filename)
+    output_path = os.path.join(output_dir, condidatname)
+
+    if os.path.exists(output_path):
+        return
+
+    os.makedirs(output_path, exist_ok=True)
+
+    if filename.endswith(".docx"):
+        docx_to_image(file_input_path, output_path, condidatname, filename)
+    else:
+        pdf_to_image(file_input_path, output_path, condidatname, filename)
+
 
 def doc_to_image(input_dir,output_dir):
 
@@ -40,21 +60,14 @@ def doc_to_image(input_dir,output_dir):
        
     condidats_list = sorted(os.listdir(input_dir),reverse=True)
 
-    for filename in tqdm(condidats_list, desc="Processing DOCs", unit="file"):
-        if filename.endswith(".pdf") or filename.endswith(".docx"):
-            condidatname = os.path.splitext(filename)[0]
-            file_input_path = os.path.join(input_dir,filename)
-            output_path = os.path.join(output_dir,condidatname)
-            if os.path.exists(output_path):
-                continue
-            os.makedirs(output_path,exist_ok=True)
-        else:
-            continue
+    worker_func = partial(process_single_file, input_dir, output_dir)
 
-        if filename.endswith(".docx"):
-            docx_to_image(file_input_path,output_path,condidatname,filename)
-        else:
-            pdf_to_image(file_input_path,output_path,condidatname,filename)
+    # Use multiprocessing Pool
+    with Pool(cpu_count()) as pool:
+        list(tqdm(pool.imap_unordered(worker_func, condidats_list), 
+                  total=len(condidats_list), 
+                  desc="Processing DOCs", 
+                  unit="file"))
         
 
 
