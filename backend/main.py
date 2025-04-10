@@ -13,6 +13,7 @@ load_dotenv()
 import time
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
+from fastapi import FastAPI
 
 def main():
 

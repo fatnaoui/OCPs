@@ -1,4 +1,4 @@
-.env
+**/.env    # Ignore .env files in any folder, no matter how deep
 # we have created data and converted_text
 # Byte-compiled / optimized / DLL files
 __pycache__/
