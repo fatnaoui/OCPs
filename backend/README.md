@@ -15,3 +15,5 @@ sudo apt install poppler-utils
 To use subprocess (which convert a docx to pdf): sudo apt install libreoffice
 
 rm -rf data_offer/image_data/* data_offer/output_data/* data_resume/image_data/* data_resume/output_data/*
+
+to run the backend app: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
