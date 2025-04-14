@@ -100,6 +100,7 @@ def welcome():
 @app.get("/scores")
 def scores():
   # res = run(model,tokenizer)
+  time.sleep(20)
   res = ["the score for hamza is 0.4", "the score for hisham is 4.5"]
   return {"scores": res}
 

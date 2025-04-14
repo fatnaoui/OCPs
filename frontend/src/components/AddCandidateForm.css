@@ -117,3 +117,31 @@ box-shadow: 0 0 8px #4a90e2;
   transform: scale(1.02);
   background-color: #323248;
 }
+
+.analyzing-loader {
+  margin-top: 1rem;
+  color: #4a90e2;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dot-flash::after {
+  content: '';
+  display: inline-block;
+  animation: dots 1.5s steps(3, end) infinite;
+  width: 1.2em;
+  text-align: left;
+}
+
+@keyframes dots {
+  0%   { content: ''; }
+  33%  { content: '.'; }
+  66%  { content: '..'; }
+  100% { content: '...'; }
+}
