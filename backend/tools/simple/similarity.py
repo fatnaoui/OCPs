@@ -14,6 +14,7 @@ if not os.path.exists(offer_json):
     os.mkdir(path=offer_json)
 
 def similarity_with_bert():
+    res = []
     bert_model, bert_tokenizer = download_bert()
 
     for offer in os.listdir(offer_json):
@@ -30,10 +31,15 @@ def similarity_with_bert():
             candidate_name = os.path.splitext(candidate)[0]
             candidate_mbedding = sentence_embedding(candidate_path,bert_model, bert_tokenizer)
             score = cosine(offer_embedding,candidate_mbedding)
-            print(f"The score for the candidate {candidate_name} in {offer_name} offer is {score:.2f}")
+            quote = f"The score for the candidate {candidate_name} in {offer_name} offer is {score:.2f}"
+            print(quote)
+            res.append(quote)
+
+    return res
+
 
 def similarity_with_sbert():
-
+    res = []
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
     for offer in os.listdir(offer_json):
@@ -81,9 +87,13 @@ def similarity_with_sbert():
             similarity_sbert = (expereince_similarity*0.5 + skills_similarity_sbert*0.5)
 
             # print(f"The score for the candidate {candidate_name} in {offer_name} offer using lex is {similarity_lex*100:.2f}")
-            print(f"The score for the candidate {candidate_name} in {offer_name} offer is {similarity_sbert*100:.2f}")
-            print(f"{skills_exp_similarities_sbert*100:.2f}")
+            # print(f"The score for the candidate {candidate_name} in {offer_name} offer is {similarity_sbert*100:.2f}")
+            quote = f"The score for the candidate {candidate_name} in {offer_name} offer is {skills_exp_similarities_sbert*100:.2f}"
+            print(quote)
+            res.append(quote)
             print()
+
+    return res
 
             
 def skills_score(offer_skills,candidate_skills):
