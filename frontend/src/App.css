@@ -1,10 +1,14 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #121212; /* dark background */
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #121212;
 }
 
 .logo {
