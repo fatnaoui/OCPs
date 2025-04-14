@@ -1,0 +1,53 @@
+.candidate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    background: #1e1e2f;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="file"] {
+    background-color: #2c2c3a;
+    color: #f0f0f0;
+    padding: 0.6rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  input::placeholder {
+    color: #aaa;
+  }
+  
+  button[type="submit"] {
+    padding: 0.75rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #357ab7;
+  }
+  

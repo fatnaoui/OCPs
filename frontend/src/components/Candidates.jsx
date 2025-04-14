@@ -16,10 +16,14 @@ const CandidateList = () => {
     }
   };
 
-  const addCandidate = async (candidateName) => {
+  const addCandidate = async (formData) => {
     try {
-      await api.post('/candidate', {full_name: candidateName});
-      fetchCandidates();  // Refresh the list after adding a candidate
+      await api.post('/candidate', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      fetchCandidates();
     } catch (error) {
       console.error("Error adding candidate", error);
     }
@@ -31,12 +35,6 @@ const CandidateList = () => {
 
   return (
     <div>
-      <h2>Candidates List</h2>
-      <ul>
-        {candidates.map((candidate, index) => (
-          <li key={index}>{candidate.full_name}</li>
-        ))}
-      </ul>
       <AddCandidateForm addCandidate={addCandidate} />
     </div>
   );

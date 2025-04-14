@@ -1,3 +1,4 @@
+from turtle import up
 from sympy.functions.elementary.piecewise import ExprCondPair
 from tools import ( doc_to_image, 
                     resume_extraction,
@@ -14,15 +15,15 @@ import time
 import warnings
 warnings.simplefilter("ignore", FutureWarning)
 
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Form
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List
 
 app = FastAPI()
 
-origins = ["http://localhost:3000"]
+origins = ["*","http://localhost:3000","https://5173-01jn2a4rdakmhm1hazd2318er7.cloudspaces.litng.ai"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  
@@ -33,20 +34,46 @@ app.add_middleware(
 
 class Candidate(BaseModel):
   full_name: str
+  email: EmailStr
+  cv_filename: str
 
 class Candidates(BaseModel):
   candidates: List[Candidate]
 
 memory_db = {"candidates": []}
 
-@app.get("/candidates") #,response_model=Candidates)
+@app.get("/candidates",response_model=Candidates)
 def get_candidates():
   return Candidates(candidates=memory_db["candidates"])
 
 @app.post("/candidate",response_model=Candidate)
-def add_candidate(candidate: Candidate):
-  memory_db["candidates"].append(candidate)
-  return candidate
+async def add_candidate(full_name: str = Form(...),
+    email: EmailStr = Form(...),
+    cv: UploadFile = File(...),
+    offer: UploadFile = File(...)):
+
+  # Save file
+    input_resume = os.getenv("INPUT_RESUME","./data_resume/input_data")
+    input_offer = os.getenv("INPUT_OFFER","./data_offer/input_data")
+
+    path_resume = os.path.join(input_resume,cv.filename)
+    path_offer = os.path.join(input_offer,offer.filename)
+
+    with open(path_resume, "wb") as f:
+        f.write(await cv.read())
+
+    with open(path_offer, "wb") as f:
+        f.write(await offer.read())
+
+    candidate = {
+        "full_name": full_name,
+        "email": email,
+        "cv_filename": cv.filename,
+        "offer_filename": offer.filename
+    }
+
+    memory_db["candidates"].append(candidate)
+    return candidate
 
 # Validate required environment variables
 try:
