@@ -41,49 +41,55 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Candidate(BaseModel):
-  full_name: str
-  email: EmailStr
-  cv_filename: str
+class Offer(BaseModel):
   offer_filename: str
+  cv_filenames: List[str]
 
-class Candidates(BaseModel):
-  candidates: List[Candidate]
+class Offers(BaseModel):
+  offers: List[Offer]
 
-memory_db = {"candidates": []}
+memory_db = {"offers": []}
 
-@app.get("/candidates",response_model=Candidates)
-def get_candidates():
-  return Candidates(candidates=memory_db["candidates"])
+# === GET all offers ===
+@app.get("/offers", response_model=Offers)
+def get_offers():
+    return Offers(offers=memory_db["offers"])
 
-@app.post("/candidate",response_model=Candidate)
-async def add_candidate(full_name: str = Form(...),
-    email: EmailStr = Form(...),
-    cv: UploadFile = File(...),
-    offer: UploadFile = File(...)):
+# === POST: Add one offer + multiple CVs ===
+@app.post("/", response_model=Offer)
+async def add_candidates(
+    offer: UploadFile = File(...),
+    cvs: List[UploadFile] = File(...)
+):
+    input_resume = os.getenv("INPUT_RESUME", "./data_resume/input_data")
+    input_offer = os.getenv("INPUT_OFFER", "./data_offer/input_data")
 
-  # Save file
-    input_resume = os.getenv("INPUT_RESUME","./data_resume/input_data")
-    input_offer = os.getenv("INPUT_OFFER","./data_offer/input_data")
+    os.makedirs(input_resume, exist_ok=True)
+    os.makedirs(input_offer, exist_ok=True)
 
-    path_resume = os.path.join(input_resume,cv.filename)
-    path_offer = os.path.join(input_offer,offer.filename)
-
-    with open(path_resume, "wb") as f:
-        f.write(await cv.read())
-
+    # Save job offer
+    path_offer = os.path.join(input_offer, offer.filename)
     with open(path_offer, "wb") as f:
         f.write(await offer.read())
 
-    candidate = {
-        "full_name": full_name,
-        "email": email,
-        "cv_filename": cv.filename,
-        "offer_filename": offer.filename
-    }
+    # Save CVs
+    uploaded_cv_names = []
+    for cv in cvs:
+        cv_filename = os.path.basename(cv.filename) 
+        path_resume = os.path.join(input_resume, cv_filename)
+        with open(path_resume, "wb") as f:
+            f.write(await cv.read())
+        uploaded_cv_names.append(cv.filename)
 
-    memory_db["candidates"].append(candidate)
-    return candidate
+    # Save in memory DB
+    offer_record = {
+        "offer_filename": offer.filename,
+        "cv_filenames": uploaded_cv_names
+    }
+    memory_db["offers"].append(offer_record)
+
+    # Return as response
+    return Offer(**offer_record)
 
 # Validate required environment variables
 try:
@@ -93,12 +99,8 @@ try:
 except Exception as e:
   raise Exception(f"Missing required env vars: {e}")
 
-@app.get("/")
-def welcome():
-    return {"message": "Welcome to OCP Resume & Offer Processing, Friendo"}
-
 @app.get("/scores")
-def scores():
+async def scores():
   # res = run(model,tokenizer)
   time.sleep(20)
   res = ["the score for hamza is 0.4", "the score for hisham is 4.5"]
