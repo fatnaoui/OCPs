@@ -115,8 +115,19 @@ except Exception as e:
 async def scores():
   # res = run(model,tokenizer)
   time.sleep(20)
-  res = ["the score for hamza is 0.4", "the score for hisham is 4.5"]
-  return {"scores": res}
+  res = [{
+                "candidate_name": "Hamza Fatnaoui",
+                "score":70.50,
+                "data": {"skills": ["python","C++"],
+                        "experience": ["i know python"]}
+            }, 
+            {
+            "candidate_name": "primo",
+            "score":50.45,
+            "data":{"skills": ["java","C++"],
+                        "experience": ["i know java"]}
+        }]
+  return res
 
 # def main():
 

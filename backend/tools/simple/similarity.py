@@ -88,9 +88,15 @@ def similarity_with_sbert():
 
             # print(f"The score for the candidate {candidate_name} in {offer_name} offer using lex is {similarity_lex*100:.2f}")
             # print(f"The score for the candidate {candidate_name} in {offer_name} offer is {similarity_sbert*100:.2f}")
-            quote = f"The score for the candidate {candidate_name} in {offer_name} offer is {skills_exp_similarities_sbert*100:.2f}"
+            s = f"{skills_exp_similarities_sbert*100:.2f}"
+            quote = f"The score for the candidate {candidate_name} in {offer_name} offer is {s}"
+            dictt = {
+                "candidate_name": candidate_name,
+                "score":s,
+                "data": extracted_resume_data
+            }
             print(quote)
-            res.append(quote)
+            res.append(dictt)
             print()
 
     return res
