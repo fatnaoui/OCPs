@@ -55,6 +55,18 @@ memory_db = {"offers": []}
 def get_offers():
     return Offers(offers=memory_db["offers"])
 
+# Create necessary directories if they don't exist
+for dir_path in [
+    "./data_resume/input_data", 
+    "./data_resume/image_data", 
+    "./data_resume/output_data",
+    "./data_offer/input_data", 
+    "./data_offer/image_data", 
+    "./data_offer/output_data"
+]:
+    os.makedirs(dir_path, exist_ok=True)
+    print(f"Created directory: {dir_path}")
+
 # === POST: Add one offer + multiple CVs ===
 @app.post("/", response_model=Offer)
 async def add_candidates(
