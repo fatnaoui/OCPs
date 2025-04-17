@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
-import './AddCandidateForm.css'; // Optional
+import './AddCandidateForm.css'; 
 
 const AddCandidateForm = ({ addCandidate }) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [cv, setCv] = useState(null);
+  const [cvFiles, setCvFiles] = useState([]);
   const [offer, setOffer] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (fullName && email && cv && offer) {
+    if (cvFiles.length > 0 && offer) {
       const formData = new FormData();
-      formData.append("full_name", fullName);
-      formData.append("email", email);
-      formData.append("cv", cv);
+
       formData.append("offer", offer);
+      cvFiles.forEach((file) => {
+        formData.append("cvs", file);
+      });
 
       addCandidate(formData);
 
-      setFullName('');
-      setEmail('');
-      setCv(null);
-      setOffer(null)
+      setCvFiles([]);
+      setOffer(null);
       event.target.reset();
     }
   };
@@ -30,39 +27,7 @@ const AddCandidateForm = ({ addCandidate }) => {
   return (
     <form className="candidate-form" onSubmit={handleSubmit} encType="multipart/form-data">
       <div className="form-group">
-        <label>Full Name</label>
-        <input
-          type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder="e.g. Hamza Fatnaoui"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="e.g. hamzafatnaoui@gmail.com"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Resume (PDF or DOCx)</label>
-        <input
-          type="file"
-          accept=".pdf,.docx"
-          onChange={(e) => setCv(e.target.files[0])}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Offer (PDF or DOCx)</label>
+        <label>Upload Job Offer (PDF/DOCX)</label>
         <input
           type="file"
           accept=".pdf,.docx"
@@ -71,9 +36,24 @@ const AddCandidateForm = ({ addCandidate }) => {
         />
       </div>
 
-      <button type="submit">📤 Submit Candidate</button>
+      <div className="form-group">
+        <label>Select Folder with Candidate Resumes</label>
+        <input
+          type="file"
+          webkitdirectory="true"
+          directory=""
+          multiple
+          accept=".pdf,.docx"
+          onChange={(e) => setCvFiles(Array.from(e.target.files))}
+          required
+        />
+        {/* <small>You can upload an entire folder of resumes</small> */}
+      </div>
+
+      <button type="submit">📊 Score All Candidates</button>
     </form>
   );
 };
 
 export default AddCandidateForm;
+

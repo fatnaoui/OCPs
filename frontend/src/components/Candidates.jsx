@@ -2,64 +2,62 @@ import React, { useEffect, useState } from 'react';
 import AddCandidateForm from './AddCandidateForm';
 import api from '../api';
 
-const CandidateList = () => {
-  const [candidates, setCandidates] = useState([]);
+const OfferList = () => {
+  const [offers, setOffers] = useState([]);
   const [scores, setScores] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // 👈 Add loading state
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCandidates = async () => {
+  const fetchOffers = async () => {
     try {
-      const response = await api.get('/candidates');
-      setCandidates(response.data.candidates);
+      const response = await api.get('/offers'); // updated route
+      setOffers(response.data.offers);
     } catch (error) {
-      console.error("Error fetching candidates", error);
+      console.error("Error fetching offers", error);
     }
   };
 
-  const addCandidate = async (formData) => {
+  const addOffer = async (formData) => {
     try {
-      await api.post('/candidate', formData, {
+      await api.post('/', formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       });
-      fetchCandidates();
+      fetchOffers();
     } catch (error) {
-      console.error("Error adding candidate", error);
+      console.error("Error adding offer", error);
     }
   };
 
   const fetchScores = async () => {
-    setIsLoading(true); // 👈 Start loader
+    setIsLoading(true);
     try {
       const response = await api.get('/scores');
       setScores(response.data.scores);
     } catch (error) {
       console.error("Error fetching scores", error);
     }
-    setIsLoading(false); // 👈 Stop loader
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchCandidates();
+    fetchOffers();
   }, []);
 
   return (
     <div>
-      <AddCandidateForm addCandidate={addCandidate} />
+      <AddCandidateForm addCandidate={addOffer} /> {/* keeping form name unchanged */}
 
       <div style={{ marginTop: '2rem' }}>
         <button onClick={fetchScores}>📊 View All Scores</button>
       </div>
 
-      {/* ✅ Loading indicator */}
       {isLoading && (
         <div className="analyzing-loader">
-          <span className="dot-flash">⚙️ Analyzing your resume vs offer</span>
+          <span className="dot-flash">⚙️ Analyzing</span>
         </div>
       )}
 
-      {/* ✅ Scores */}
       {scores.length > 0 && !isLoading && (
         <div className="score-container">
           <h3 className="score-title">📈 Match Scores</h3>
@@ -76,4 +74,4 @@ const CandidateList = () => {
   );
 };
 
-export default CandidateList;
+export default OfferList;
