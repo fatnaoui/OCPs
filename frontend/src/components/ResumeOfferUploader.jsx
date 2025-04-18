@@ -24,8 +24,7 @@ const ResumeOfferUploader = () => {
     setCvFiles(Array.from(e.target.files));
   };
 
-  // Handle submit: upload offer and CVs, then fetch scores
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setScores([]);
@@ -40,20 +39,35 @@ const ResumeOfferUploader = () => {
       cvFiles.forEach((file) => {
         formData.append('cvs', file);
       });
+      // Send files to backend
       await api.post('/', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      // After upload, fetch scores
-      const response = await api.get('/scores');
-      setScores(response.data);
+      // After upload, do NOT fetch scores here
     } catch (err) {
-      setError('Error uploading or fetching scores: ' + (err.response?.data?.detail || err.message));
+      setError('Error uploading documents: ' + (err.response?.data?.detail || err.message));
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
+  // Fetch scores when user clicks 'Get Match'
+  const handleGetScores = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setIsAnalyzing(true);
+    try {
+      const response = await api.get('/scores');
+      setScores(response.data);
+      setActiveStep(3);
+    } catch (err) {
+      setError('Error fetching scores: ' + (err.response?.data?.detail || err.message));
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const extractKeywords = (text) => {
     if (!text) return [];
@@ -137,7 +151,7 @@ const ResumeOfferUploader = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-green-200 via-green-400 to-green-600 font-sans">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-green-100 via-green-200 to-green-400 font-sans">
       {/* Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
@@ -185,7 +199,7 @@ const ResumeOfferUploader = () => {
               </div>
             </div>
 
-          <div className="bg-red-500 rounded-2xl shadow-2xl border border-green-100 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-2xl border border-green-200 overflow-hidden">
             <div className="p-6">
               {activeStep === 1 && (
                 <div>
@@ -282,15 +296,27 @@ const ResumeOfferUploader = () => {
                           <h4 className="font-medium text-green-800">Job Description Uploaded</h4>
                           <p className="text-green-700 text-sm">{offerFile.name}</p>
                         </div>
-                        <button 
-                          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
-                          onClick={e => {
-                            e.stopPropagation();
-                            setActiveStep(3);
-                          }}
-                        >
-                          Continue
-                        </button>
+                        <div onClick={e => e.stopPropagation()} style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            className="px-4 py-2 mr-2 bg-green-600 hover:bg-green-700 text-white rounded-lg border border-green-300 disabled:opacity-50"
+                            onClick={handleSubmit}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Submitting...' : 'Submit'}
+                          </button>
+                          <span
+                            title={isLoading ? 'Please wait until the documents have been submitted.' : (!offerFile || cvFiles.length === 0 ? 'Please upload both a job description and at least one resume to enable matching.' : '')}
+                            style={{ display: 'inline-block' }}
+                          >
+                            <button
+                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg border border-green-300 disabled:opacity-50"
+                              disabled={isLoading || !offerFile || cvFiles.length === 0 || isAnalyzing}
+                              onClick={handleGetScores}
+                            >
+                              {isAnalyzing ? 'Analyzing...' : 'Get Match'}
+                            </button>
+                          </span>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -318,43 +344,127 @@ const ResumeOfferUploader = () => {
                   ) : Array.isArray(scores) && scores.length > 0 ? (
                     <div className="mt-4">
                       {/* Render scores results here, e.g. map over scores */}
-                  {scores.map((result, idx) => (
-                        <div key={idx} className="bg-gradient-to-r from-green-800 to-green-700 rounded-2xl overflow-hidden shadow-lg mb-8">
-                          <div className="p-6 text-white">
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-lg font-medium opacity-90">Match Score</h3>
-                              <div className="bg-white bg-opacity-20 rounded-full px-3 py-1 text-sm">
-                                Candidate Report
-                              </div>
-                            </div>
-                            <div className="mt-6 flex items-center">
-                              <div className="relative">
-                                <div className="w-32 h-32 rounded-full flex items-center justify-center bg-white bg-opacity-10">
-                                  <div className={`w-24 h-24 rounded-full bg-gradient-to-r ${getScoreGradient(result.score)} flex items-center justify-center text-white font-bold text-3xl`}>
-                                    {result.score}%
-                                  </div>
-                                </div>
-                                <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-2xl">
-                                  {getScoreEmoji(result.score)}
-                                </div>
-                              </div>
-                              <div className="ml-6 flex-grow">
-                                <h4 className="text-xl font-bold mb-2">{result.summary}</h4>
-                                <div className="grid grid-cols-2 gap-3 mt-4">
-                                  <div className="bg-white bg-opacity-10 p-2 rounded flex items-center">
-                                    <CheckCircle className="w-4 h-4 mr-2" />
-                                    <span className="text-sm">{result.matchedKeywords.length} Skills Matched</span>
-                                  </div>
-                                  <div className="bg-white bg-opacity-10 p-2 rounded flex items-center">
-                                    <AlertCircle className="w-4 h-4 mr-2" />
-                                    <span className="text-sm">{result.missingKeywords.length} Skills Missing</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            {/* ...rest of the result rendering ... */}
-                          </div>
-                        </div>
+                  {[...scores]
+  .sort((a, b) => (b.score || 0) - (a.score || 0))
+  .slice(0, 20)
+  .map((result, idx) => (
+                        <div key={idx} className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl overflow-hidden shadow-lg mb-4 p-0">
+  <div className="p-6 flex flex-col text-white">
+    {/* Header: Name & Match */}
+    <div className="flex flex-col items-center pb-2">
+      <h2 className="text-2xl font-bold text-center text-white">
+        {result.candidate_name || result.name || `Candidate ${idx + 1}`}
+      </h2>
+      <p className="text-green-100 font-semibold text-center mt-1" style={{maxWidth: '80%'}}>
+        {result.score >= 80 ? (
+          <>Excellent match! <span className="text-white font-bold">{result.score}%</span>.</>
+        ) : result.score >= 50 ? (
+          <>Good potential! <span className="text-white font-bold">{result.score}%</span>.</>
+        ) : (
+          <>Partial match! <span className="text-white font-bold">{result.score}%</span>. Consider reviewing their profile for more details.</>
+        )}
+      </p>
+    </div>
+    {/* Actions Row */}
+    <div className="flex items-center justify-end gap-2 mb-2">
+      <button
+        className="px-3 py-1 bg-white bg-opacity-20 hover:bg-green-400 active:bg-green-600 text-green-900 rounded shadow text-sm transition-colors duration-150"
+        style={{ cursor: 'pointer' }}
+        onClick={() => {
+          // Gather all info
+          const candidateName = result.candidate_name || result.name || `Candidate ${idx + 1}`;
+          const skillsArr = (Array.isArray(result.skills) && result.skills.length > 0)
+            ? (typeof result.skills[0] === 'string'
+                ? result.skills
+                : result.skills.map(skill => skill.name || '').filter(Boolean))
+            : (result.data && Array.isArray(result.data.skills) && result.data.skills.length > 0)
+              ? result.data.skills
+              : [];
+          const experienceArr = (Array.isArray(result.experience) && result.experience.length > 0)
+            ? result.experience
+            : (result.data && Array.isArray(result.data.experience) && result.data.experience.length > 0)
+              ? result.data.experience
+              : [];
+          const content = `Name: ${candidateName}
+Score: ${result.score}%
+Summary: ${generateSummary(result.score)}
+\nSkills: ${skillsArr.length > 0 ? skillsArr.join(', ') : 'N/A'}
+Experience: ${experienceArr.length > 0 ? experienceArr.join('; ') : 'N/A'}`;
+          const blob = new Blob([content], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${candidateName.replace(/\s+/g, '_')}_report.txt`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }}
+      >
+        Export
+      </button>
+      <div className="bg-green-500 bg-opacity-80 rounded-full px-3 py-1 text-sm text-white border border-green-300 shadow-sm">
+        Candidate Report
+      </div>
+    </div>
+    <div className="border-b border-green-600 mb-4"></div>
+    {/* Body: Score & Details */}
+    <div className="flex flex-row items-center gap-6">
+      {/* Score Circle */}
+      <div className="relative">
+        <div className="w-32 h-32 rounded-full flex items-center justify-center bg-green-400 bg-opacity-30 border border-green-200 shadow-sm">
+          <div className={`w-24 h-24 rounded-full bg-gradient-to-r ${getScoreGradient(result.score)} flex items-center justify-center text-white font-bold text-3xl`}>
+            {result.score}%
+          </div>
+        </div>
+        <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-2xl">
+          {getScoreEmoji(result.score)}
+        </div>
+      </div>
+      {/* Details */}
+      <div className="flex flex-col flex-grow">
+        <h4 className="text-lg font-bold mb-1">{generateSummary(result.score)}</h4>
+        <button
+  className="mt-2 mb-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded shadow text-sm transition-colors duration-150 w-max"
+  onClick={() => {
+    const candidateName = result.candidate_name || result.name || `Candidate ${idx + 1}`;
+    const skillsArr = (Array.isArray(result.skills) && result.skills.length > 0)
+      ? (typeof result.skills[0] === 'string'
+          ? result.skills
+          : result.skills.map(skill => skill.name || '').filter(Boolean))
+      : (result.data && Array.isArray(result.data.skills) && result.data.skills.length > 0)
+        ? result.data.skills
+        : [];
+    const experienceArr = (Array.isArray(result.experience) && result.experience.length > 0)
+      ? result.experience
+      : (result.data && Array.isArray(result.data.experience) && result.data.experience.length > 0)
+        ? result.data.experience
+        : [];
+    alert(
+      `Name: ${candidateName}\nScore: ${result.score}%\nSummary: ${generateSummary(result.score)}\nSkills: ${skillsArr.length > 0 ? skillsArr.join(', ') : 'N/A'}\nExperience: ${experienceArr.length > 0 ? experienceArr.join('; ') : 'N/A'}`
+    );
+  }}
+>
+  More Info
+</button>
+        {/* Skills only */}
+        <div className="mt-2">
+          <span className="font-semibold text-green-100">Skills:</span>
+          <span className="ml-2 text-green-50">{
+  Array.isArray(result.skills) && result.skills.length > 0
+    ? (typeof result.skills[0] === 'string'
+        ? result.skills.join(', ')
+        : result.skills.map(skill => skill.name || '').filter(Boolean).join(', ')
+      )
+    : (result.data && Array.isArray(result.data.skills) && result.data.skills.length > 0)
+      ? result.data.skills.join(', ')
+      : 'N/A'
+}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
                       ))}
                     </div>
                   ) : (

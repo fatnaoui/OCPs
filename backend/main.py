@@ -115,19 +115,20 @@ except Exception as e:
 @app.get("/scores")
 async def scores():
   # res = run(model,tokenizer)
-  time.sleep(20)
+  time.sleep(10)
   res = [{
-                "candidate_name": "Hamza Fatnaoui",
-                "score":70.50,
-                "data": {"skills": ["python","C++"],
-                        "experience": ["i know python"]}
-            }, 
-            {
             "candidate_name": "primo",
             "score":50.45,
             "data":{"skills": ["java","C++"],
-                        "experience": ["i know java"]}
-        }]
+            "experience": ["i know java"]}
+        },
+        {
+            "candidate_name": "Hamza Fatnaoui",
+            "score":70.50,
+            "data": {"skills": ["python","C++"],
+            "experience": ["i know python"]}
+        }
+            ]
   return res
 
 # def main():
