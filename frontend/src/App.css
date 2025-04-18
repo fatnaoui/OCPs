@@ -1,4 +1,6 @@
-#root {
+@import "tailwindcss";
+
+/* #root {
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -6,10 +8,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #121212; /* dark background */
+  background-color: #121212;
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
-}
+} 
 
 .logo {
   height: 6em;
@@ -47,7 +49,7 @@
   color: #888;
 }
 
-/* TITLE + SUBTITLE */
+
 .animated-title {
   text-align: center;
   font-size: 2.7rem;
@@ -83,7 +85,6 @@
   font-weight: bold;
 }
 
-/* KEYFRAMES */
 @keyframes slideDown {
   from {
     transform: translateY(-20px);
@@ -115,7 +116,6 @@
   }
 }
 
-/* FORM ENHANCEMENTS */
 input:focus {
   border: 1px solid #4a90e2;
   outline: none;
@@ -129,4 +129,4 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #357ab7;
   box-shadow: 0 0 8px #4a90e2;
-}
+} */
