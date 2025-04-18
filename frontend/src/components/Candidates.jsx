@@ -33,7 +33,7 @@ const OfferList = () => {
     setIsLoading(true);
     try {
       const response = await api.get('/scores');
-      setScores(response.data.scores);
+      setScores(response.data);
     } catch (error) {
       console.error("Error fetching scores", error);
     }
@@ -44,34 +44,71 @@ const OfferList = () => {
     fetchOffers();
   }, []);
 
-  return (
-    <div>
-      <AddCandidateForm addCandidate={addOffer} /> {/* keeping form name unchanged */}
+//   return (
+//     <div>
+//       <AddCandidateForm addCandidate={addOffer} /> {/* keeping form name unchanged */}
 
-      <div style={{ marginTop: '2rem' }}>
-        <button onClick={fetchScores}>📊 View All Scores</button>
-      </div>
+//       <div style={{ marginTop: '2rem' }}>
+//         <button onClick={fetchScores}>📊 View All Scores</button>
+//       </div>
 
-      {isLoading && (
-        <div className="analyzing-loader">
-          <span className="dot-flash">⚙️ Analyzing</span>
-        </div>
-      )}
+//       {isLoading && (
+//         <div className="analyzing-loader">
+//           <span className="dot-flash">⚙️ Analyzing</span>
+//         </div>
+//       )}
 
-      {scores.length > 0 && !isLoading && (
-        <div className="score-container">
-          <h3 className="score-title">📈 Match Scores</h3>
-          <div className="score-list">
-            {scores.map((scoreText, index) => (
-              <div className="score-item" key={index}>
-                🧾 {scoreText}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+//       {scores.length > 0 && !isLoading && (
+//         <div className="score-container">
+//           <h3 className="score-title">📈 Match Scores</h3>
+//           <div className="score-list">
+//             {scores.map((scoreText, index) => (
+//               <div className="score-item" key={index}>
+//                 🧾 {scoreText}
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+   
+//       </div> 
+//   );
+// };
+
+return (
+  <div>
+    <AddCandidateForm addCandidate={addOffer} /> {/* keeping form name unchanged */}
+
+    <div style={{ marginTop: '2rem' }}>
+      <button onClick={fetchScores}>📊 View All Scores</button>
     </div>
-  );
+
+    {isLoading && (
+      <div className="analyzing-loader">
+        <span className="dot-flash">⚙️ Analyzing</span>
+      </div>
+    )}
+
+    {scores.length > 0 && !isLoading && (
+      <div className="score-container">
+        <h3 className="score-title">📈 Match Scores</h3>
+        <div className="score-list">
+          {scores.map((scoreObj, index) => (
+            <div className="score-item" key={index}>
+              <div><strong>{scoreObj.candidate_name}</strong>: <span>{scoreObj.score}</span></div>
+              {scoreObj.data && (
+                <div style={{ fontSize: '0.95em', marginTop: 4 }}>
+                  <div><b>Skills:</b> {scoreObj.data.skills && Array.isArray(scoreObj.data.skills) ? scoreObj.data.skills.join(', ') : ''}</div>
+                  <div><b>Experience:</b> {scoreObj.data.experience && Array.isArray(scoreObj.data.experience) ? scoreObj.data.experience.join('; ') : ''}</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default OfferList;

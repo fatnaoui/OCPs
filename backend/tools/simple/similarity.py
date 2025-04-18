@@ -11,7 +11,7 @@ import numpy as np
 offer_json = os.getenv("OUTPUT_OFFER", "./data_offer/output_data")
 condidate_json = os.getenv("OUTPUT_RESUME", "./data_resume/output_data")
 if not os.path.exists(offer_json):
-    os.mkdir(path=offer_json)
+    os.makedirs(offer_json,exist_ok=True)
 
 def similarity_with_bert():
     res = []

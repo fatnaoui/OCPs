@@ -14,3 +14,12 @@ If you are developing a production application, we recommend using TypeScript an
 
 
 npm install react-router-dom
+
+# some issue
+rm -rf node_modules package-lock.json
+npm install
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 18
+nvm use 18

@@ -1,13 +1,5 @@
 from turtle import up
 from sympy.functions.elementary.piecewise import ExprCondPair
-from tools import ( doc_to_image, 
-                    resume_extraction,
-                    download_omni,
-                    validate_env_vars,
-                    similarity_with_bert,
-                    similarity_with_sbert,
-                    clean_json,
-                    )
 import run_model
 import os
 from dotenv import load_dotenv
@@ -22,6 +14,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from typing import List
 
+from tools import ( doc_to_image, 
+                    resume_extraction,
+                    download_omni,
+                    validate_env_vars,
+                    similarity_with_bert,
+                    similarity_with_sbert,
+                    clean_json,
+                    )
+
 # Load the Model from the Cache
 try:
   print("The model is being loaded ...")
@@ -29,6 +30,18 @@ try:
   print("The Model was Loaded")
 except Exception as e:
   print(f"Error while trying to load the model {e}")
+
+# Create necessary directories if they don't exist
+for dir_path in [
+    "./data_resume/input_data", 
+    "./data_resume/image_data", 
+    "./data_resume/output_data",
+    "./data_offer/input_data", 
+    "./data_offer/image_data", 
+    "./data_offer/output_data"
+]:
+    os.makedirs(dir_path, exist_ok=True)
+    print(f"Created directory: {dir_path}")
 
 app = FastAPI()
 
@@ -54,18 +67,6 @@ memory_db = {"offers": []}
 @app.get("/offers", response_model=Offers)
 def get_offers():
     return Offers(offers=memory_db["offers"])
-
-# Create necessary directories if they don't exist
-for dir_path in [
-    "./data_resume/input_data", 
-    "./data_resume/image_data", 
-    "./data_resume/output_data",
-    "./data_offer/input_data", 
-    "./data_offer/image_data", 
-    "./data_offer/output_data"
-]:
-    os.makedirs(dir_path, exist_ok=True)
-    print(f"Created directory: {dir_path}")
 
 # === POST: Add one offer + multiple CVs ===
 @app.post("/", response_model=Offer)
