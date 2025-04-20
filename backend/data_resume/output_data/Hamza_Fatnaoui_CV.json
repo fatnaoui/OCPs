@@ -1,0 +1,29 @@
+{
+    "skills": [
+        "LangChain",
+        "Docker",
+        "PyTorch",
+        "HuggingFace",
+        "Jupyter Notebook",
+        "Linux",
+        "Git",
+        "Keras",
+        "Scikit-Learn"
+    ],
+    "experience": [
+        {
+            "position": "Software Engineering Intern",
+            "company": "Forges de Bazas",
+            "location": "Casablanca, MA",
+            "duration": "Jul 2024 - Sep 2024",
+            "description": "Developed a Python script to communicate with the Groq API, automating Q&A extraction from unstructured documents."
+        },
+        {
+            "position": "Software Engineering Intern",
+            "company": "Eagle Eye",
+            "location": "Casablanca, MA",
+            "duration": "Jul 2023 - Sep 2023",
+            "description": "Built a client interaction system using NLTK, improving natural language understanding for client queries."
+        }
+    ]
+}

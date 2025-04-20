@@ -1,0 +1,54 @@
+{
+    "skills": [
+        "Git",
+        "LaTeX",
+        "WandB",
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "PyTorch",
+        "Jax",
+        "scikit-learn",
+        "HuggingFace",
+        "Flask",
+        "Express.js",
+        "Angular",
+        "Django",
+        "Android Cloud",
+        "MLOps",
+        "Quantitative Research",
+        "Communication"
+    ],
+    "experience": [
+        {
+            "title": "ML Research Engineer",
+            "company": "Argania Forest Change Detection from Sentinel Satellite Images using U-Net Architecture",
+            "duration": "09/2022 - 01/2023",
+            "description": "Contribute to the critical task of detecting forest changes, particularly deforestation, in Argania forests using Sentinel-2 satellite data."
+        },
+        {
+            "title": "ML Research Intern",
+            "company": "Argania Forest Change Detection from Sentinel Satellite Images using U-Net Architecture",
+            "duration": "02/2022 - 07/2022",
+            "description": "Developed a CNN-based U-Net model for change detection in Argania forests. Employed problem formulation, model structuring, and implementation. Python, TensorFlow, U-Net, CNN techniques were key components."
+        },
+        {
+            "title": "ML Research Intern",
+            "company": "Atmospheric Visibility Image-Based System for IMC Estimation",
+            "duration": "02/2022 - 07/2022",
+            "description": "In-depth research on developing an atmospheric visibility estimation system using RGB image-based approaches."
+        },
+        {
+            "title": "Fullstack Engineer Internship",
+            "company": "SAHEM: Design And Full Stack Development Of A Crowdfunding Platform",
+            "duration": "2/2020 - 5/2020",
+            "description": "Designed and developed a crowdfunding web application called SAHEM. Leveraged MEAN stack, employed MongoDB, Express.js, Angular 9, and Node.js to create a robust platform."
+        },
+        {
+            "title": "Fullstack Engineer Consultant",
+            "company": "Various Companies",
+            "duration": "2/2016 - 7/2020",
+            "description": "Collaborated with various companies to design, develop, and scale web and Android applications. Optimized architecture of numerous web applications, bolstering security measures."
+        }
+    ]
+}

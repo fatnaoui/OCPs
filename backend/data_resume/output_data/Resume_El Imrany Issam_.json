@@ -1,0 +1,10 @@
+{
+    "skills": ["Back-End Development", "Front-End Development", "Database Management", "Programming Languages"],
+    "experience": [
+        "Built 14+ machine learning, AI-engineering and full-stack projects in fast-paced software team environments",
+        "Developed 5+ neural networks in Python, 11 apps in Typescript on AWS/Vercel with dev and production environments",
+        "Implemented Ilm-chaining, hyperparameter tuning, fine-tuning on 10+ LLM models controlling for latency & accuracy",
+        "Coached by Google Machine Learning, Google Kubernetes, Two Sigma, Tesla, Figma and Citadel Engineers",
+        "Created 321+ commits on github with 7-day deadlines getting a Career Capital increase of 40% from start date"
+    ]
+}

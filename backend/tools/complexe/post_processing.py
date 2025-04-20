@@ -39,21 +39,24 @@ def extract_skills_and_description(json_file):
 
     extracted_data = {
         "skills": [],
-        "experience": []
+        "experience": [],
+        "combined_skills": []
     }
 
     # Extract skills dynamically
     for skill in skills_variations:
         if skill in data:
             extracted_data["skills"] = data[skill]
+            extracted_data["combined_skills"] = data[skill]
             break
 
-    extracted_data["skills"] = [f"I have used {skill} to solve real-world problems in software development." for skill in extracted_data["skills"]]
+    extracted_data["combined_skills"] = [f"I have used {skill} to solve real-world problems in software development." for skill in extracted_data["combined_skills"]]
 
     for experience in experience_variations:
         if experience in data:
             extracted_data["experience"] = data[experience]
             break  
-
+    
+    print(type(extracted_data["combined_skills"][0]))
     return extracted_data
 

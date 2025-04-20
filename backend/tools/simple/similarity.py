@@ -50,7 +50,7 @@ def similarity_with_sbert():
         extracted_offer_data = extract_skills_and_description(offer_path)
 
         experience_offer_embeddings = model.encode(extracted_offer_data["experience"])
-        skills_offer_embeddings = model.encode(extracted_offer_data["skills"])
+        skills_offer_embeddings = model.encode(extracted_offer_data["combined_skills"])
         exp_skills_offer_embeddings = np.concatenate((experience_offer_embeddings,skills_offer_embeddings), axis=0)
 
         for candidate in os.listdir(condidate_json):
@@ -61,7 +61,7 @@ def similarity_with_sbert():
             extracted_resume_data = extract_skills_and_description(candidate_path)
 
             experience_resume_embeddings = model.encode(extracted_resume_data["experience"])
-            skills_resume_embeddings = model.encode(extracted_resume_data["skills"])
+            skills_resume_embeddings = model.encode(extracted_resume_data["combined_skills"])
             exp_skills_resume_embeddings = np.concatenate((experience_resume_embeddings,skills_resume_embeddings), axis=0)
 
             # Experience similarity using SBERT
